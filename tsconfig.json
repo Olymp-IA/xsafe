@@ -1,0 +1,47 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "target": "es2017",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "baseUrl": "./",
+        "incremental": true,
+        "skipLibCheck": true,
+        "strictNullChecks": false,
+        "noImplicitAny": false,
+        "strictBindCallApply": false,
+        "forceConsistentCasingInFileNames": false,
+        "noFallthroughCasesInSwitch": false,
+        "paths": {
+            "@app/shared-types": [
+                "packages/shared-types/src"
+            ],
+            "@app/shared-types/*": [
+                "packages/shared-types/src/*"
+            ],
+            "@app/business-logic": [
+                "packages/business-logic/src"
+            ],
+            "@app/business-logic/*": [
+                "packages/business-logic/src/*"
+            ],
+            "@app/ui-kit": [
+                "packages/ui-kit/src"
+            ],
+            "@app/ui-kit/*": [
+                "packages/ui-kit/src/*"
+            ],
+            "@app/config": [
+                "packages/config/src"
+            ],
+            "@app/config/*": [
+                "packages/config/src/*"
+            ]
+        }
+    }
+}

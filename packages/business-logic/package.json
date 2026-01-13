@@ -1,0 +1,11 @@
+{
+    "name": "@app/business-logic",
+    "version": "0.0.1",
+    "description": "Shared Business Logic",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "dependencies": {},
+    "devDependencies": {
+        "typescript": "^5.1.3"
+    }
+}

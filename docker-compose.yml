@@ -1,0 +1,101 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: xsafe-postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: xsafe_admin
+      POSTGRES_PASSWORD: safe_password_123 # TODO: Change in production
+      POSTGRES_DB: xsafe_erp
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - xsafe-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U xsafe_admin -d xsafe_erp"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: xsafe-redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    networks:
+      - xsafe-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio
+    container_name: xsafe-minio
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      MINIO_ROOT_USER: minio_admin
+      MINIO_ROOT_PASSWORD: minio_password # TODO: Change in production
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - xsafe-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: xsafe-rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - xsafe-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: xsafe-pgadmin
+    ports:
+      - '5050:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@xsafe.com
+      PGADMIN_DEFAULT_PASSWORD: admin_password # TODO: Change in production
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - xsafe-network
+    depends_on:
+      - postgres
+
+networks:
+  xsafe-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:
+  rabbitmq_data:
+  pgadmin_data:

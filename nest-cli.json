@@ -1,0 +1,73 @@
+{
+    "$schema": "https://json.schemastore.org/nest-cli",
+    "collection": "@nestjs/schematics",
+    "sourceRoot": "apps/core-backend/src",
+    "compilerOptions": {
+        "deleteOutDir": true
+    },
+    "monorepo": true,
+    "root": "apps/core-backend",
+    "projects": {
+        "core-backend": {
+            "type": "application",
+            "root": "apps/core-backend",
+            "entryFile": "main",
+            "sourceRoot": "apps/core-backend/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/core-backend/tsconfig.app.json"
+            }
+        },
+        "workshop-monitor": {
+            "type": "application",
+            "root": "apps/workshop-monitor",
+            "sourceRoot": "apps/workshop-monitor/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/workshop-monitor/tsconfig.app.json"
+            }
+        },
+        "admin-dashboard": {
+            "type": "application",
+            "root": "apps/admin-dashboard",
+            "sourceRoot": "apps/admin-dashboard/src",
+            "compilerOptions": {
+                "tsConfigPath": "apps/admin-dashboard/tsconfig.app.json"
+            }
+        },
+        "shared-types": {
+            "type": "library",
+            "root": "packages/shared-types",
+            "entryFile": "index",
+            "sourceRoot": "packages/shared-types/src",
+            "compilerOptions": {
+                "tsConfigPath": "packages/shared-types/tsconfig.lib.json"
+            }
+        },
+        "business-logic": {
+            "type": "library",
+            "root": "packages/business-logic",
+            "entryFile": "index",
+            "sourceRoot": "packages/business-logic/src",
+            "compilerOptions": {
+                "tsConfigPath": "packages/business-logic/tsconfig.lib.json"
+            }
+        },
+        "ui-kit": {
+            "type": "library",
+            "root": "packages/ui-kit",
+            "entryFile": "index",
+            "sourceRoot": "packages/ui-kit/src",
+            "compilerOptions": {
+                "tsConfigPath": "packages/ui-kit/tsconfig.lib.json"
+            }
+        },
+        "config": {
+            "type": "library",
+            "root": "packages/config",
+            "entryFile": "index",
+            "sourceRoot": "packages/config/src",
+            "compilerOptions": {
+                "tsConfigPath": "packages/config/tsconfig.lib.json"
+            }
+        }
+    }
+}
