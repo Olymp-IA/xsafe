@@ -1,27 +1,30 @@
 graph TB
-    User((Usuario/Cliente))
-    Admin((Admin/Gerente))
-    Operator((Operario))
+    User(("Usuario/Cliente"))
+    Admin(("Admin/Gerente"))
+    Operator(("Operario"))
     
     subgraph "Ecosistema XSafe"
-        Store[Tienda E-commerce\n(Next.js)]
-        WebAdmin[Panel Web\n(Next.js)]
-        ERP_API[API Core ERP\n(NestJS)]
-        Mobile[App Móvil\n(React Native)]
-        Desktop[App Escritorio\n(Electron)]
-        DB[(PostgreSQL)]
-        Redis[(Redis Caché)]
+        Store["Tienda E-commerce<br>(Next.js)"]
+        WebAdmin["Panel Web<br>(Next.js)"]
+        ERP_API["API Core ERP<br>(NestJS)"]
+        Mobile["App Móvil<br>(React Native)"]
+        Desktop["App Escritorio<br>(Electron)"]
+        Monitor["Monitor Taller<br>(React + Vite)"]
+        DB[("(PostgreSQL)")]
+        Redis[("(Redis Caché)")]
     end
     
     User --> Store
     Admin --> WebAdmin
     Operator --> Mobile
     Operator --> Desktop
+    Operator --> Monitor
     
     Store --> ERP_API
     WebAdmin --> ERP_API
     Mobile --> ERP_API
     Desktop --> ERP_API
+    Monitor --> ERP_API
     
     ERP_API --> DB
     ERP_API --> Redis
