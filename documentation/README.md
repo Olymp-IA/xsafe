@@ -1,108 +1,108 @@
-# 🛡️ XSafe ERP & E-commerce Platform
+# XSafe ERP & Plataforma de E-commerce
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![Coverage](https://img.shields.io/badge/coverage-85%25-green)
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 
-## 📖 Executive Overview
+## Resumen Ejecutivo
 
-**XSafe ERP** is a state-of-the-art, enterprise-grade platform designed to revolutionize the manufacturing and sales of advanced motorcycle protection systems. This monorepo integrates a high-performance diverse ecosystem:
+**XSafe ERP** es una plataforma de nivel empresarial diseñada para revolucionar la fabricación y venta de sistemas de protección para motocicletas. Este repositorio integra un ecosistema diverso de alto rendimiento:
 
-*   **🛒 E-commerce Storefront**: Next.js-based consumer facing platform with 3D product visualization.
-*   **🏭 ERP Core**: NestJS microservices architecture for managing production, inventory, and logistics.
-*   **📱 Mobile Operator App**: Offline-first React Native application for shop floor management.
-*   **📊 Analytics Dashboard**: Real-time business intelligence and reporting.
+*   **Tienda E-commerce**: Plataforma para el consumidor final basada en Next.js con visualización de productos en 3D.
+*   **ERP Core**: Arquitectura de microservicios NestJS para la gestión de producción, inventario y logística.
+*   **App Móvil Operarios**: Aplicación React Native offline-first para la gestión en planta.
+*   **Panel de Analítica**: Inteligencia de negocios y reportes en tiempo real.
 
-Built with a focus on **scalability**, **security**, and **reliability**, XSafe ERP follows strict ISO compliance standards and utilizes modern cloud-native technologies.
+Construido con un enfoque en **escalabilidad**, **seguridad** y **confiabilidad**, XSafe ERP sigue estrictos estándares de cumplimiento ISO y utiliza tecnologías modernas nativas de la nube.
 
 ---
 
-## 🏗️ Tech Stack
+## Stack Tecnológico
 
-### Frontend Ecosystem
-*   **Web Store**: Next.js 14, React 18, Tailwind CSS, Framer Motion
-*   **Web Admin**: Next.js 14 App Router, NextAuth, Recharts (ERP Dashboard)
-*   **3D Engine**: Three.js, React Three Fiber, Drei
-*   **State Management**: Zustand, React Query
-*   **Mobile**: React Native 0.72, TypeScript, SQLite (Offline Mode)
-*   **Desktop**: Electron 25, React, SQLite (Offline-First)
+### Ecosistema Frontend
+*   **Tienda Web**: Next.js 14, React 18, Tailwind CSS, Framer Motion
+*   **Administración Web**: Next.js 14 App Router, NextAuth, Recharts (ERP Dashboard)
+*   **Motor 3D**: Three.js, React Three Fiber, Drei
+*   **Gestión de Estado**: Zustand, React Query
+*   **Móvil**: React Native 0.72, TypeScript, SQLite (Modo Offline)
+*   **Escritorio**: Electron 25, React, SQLite (Offline-First)
 
-### Backend Services
+### Servicios Backend
 *   **API Gateway**: NestJS, Fastify
-*   **Database**: PostgreSQL (Prisma ORM), Redis (Caching)
-*   **Message Broker**: RabbitMQ / Kafka (Event Driven)
-*   **Auth**: JWT, OAuth2, Role-Based Access Control (RBAC)
+*   **Base de Datos**: PostgreSQL (Prisma ORM), Redis (Caching)
+*   **Mensajería**: RabbitMQ / Kafka (Event Driven)
+*   **Autenticación**: JWT, OAuth2, Control de Acceso Basado en Roles (RBAC)
 
-### DevOps & Infrastructure
-*   **Containerization**: Docker, Docker Compose
-*   **CI/CD**: GitHub Actions
-*   **Monitoring**: Prometheus, Grafana, Sentry
+### Infraestructura y DevOps
+*   **Contenedores**: Docker, Docker Compose
+*   **Integración Continua**: GitHub Actions
+*   **Monitoreo**: Prometheus, Grafana, Sentry
 
 ---
 
-## 🚀 Quick Start
+## Guía de Inicio Rápido
 
-### Prerequisites
-*   Node.js v20.x or higher
-*   Docker & Docker Compose
+### Requisitos Previos
+*   Node.js v20.x o superior
+*   Docker y Docker Compose
 *   PostgreSQL 15+
-*   Android Studio / Xcode (for mobile development)
+*   Android Studio / Xcode (para desarrollo móvil)
 
-### One-Command Setup
-We provide a unified script to bootstrap the entire environment:
+### Configuración Unificada
+Proporcionamos un script unificado para iniciar todo el entorno:
 
 ```bash
-# Clone the repository
-git clone https://github.com/xsafe/xsafe-erp.git
-cd xsafe-erp
+# Clonar el repositorio
+git clone https://github.com/Olymp-IA/xsafe.git
+cd xsafe
 
-# Install dependencies (Monorepo)
+# Instalar dependencias (Monorepo)
 npm install
 
-# Start development environment (Docker services + Apps)
+# Iniciar entorno de desarrollo (Servicios Docker + Apps)
 npm run dev:all
 ```
 
-Alternatively, run specific services:
+Alternativamente, puede iniciar servicios específicos:
 
 ```bash
-# Frontend (Store)
+# Frontend (Tienda)
 npm run dev:ecommerce
 
-# Web Admin (ERP)
+# Administración Web (ERP)
 npm run dev:web
 
-# Backend only
+# Solo Backend
 npm run dev:backend
 
-# Mobile Android
+# Móvil Android
 npm run android
 
-# Desktop App
+# App de Escritorio
 npm run dev:desktop
 ```
 
 ---
 
-## 📚 Documentation Index
+## Índice de Documentación
 
-For detailed information, please refer to our comprehensive documentation suite located in `/documentation`:
+Para información detallada, por favor consulte nuestra suite de documentación completa ubicada en `/documentation`:
 
-*   [**Architecture Overview**](./documentation/ARCHITECTURE.md): System design, patterns, and C4 diagrams.
-*   [**API Reference**](./documentation/API_DOCUMENTATION.md): OpenAPI/Swagger specs and endpoint guide.
-*   [**User Manual**](./documentation/USER_MANUAL.md): End-user guides for Shop and ERP.
-*   [**Developer Guide**](./documentation/DEVELOPER_GUIDE.md): Contribution guidelines and setup.
-*   [**Security Policy**](./documentation/SECURITY.md): Auth models and compliance.
-*   [**Deployment Guide**](./documentation/DEPLOYMENT_GUIDE.md): Production rollout strategies.
+*   [**Visión General de Arquitectura**](./ARCHITECTURE.md): Diseño del sistema, patrones y diagramas C4.
+*   [**Referencia API**](./API_DOCUMENTATION.md): Especificaciones OpenAPI/Swagger y guía de endpoints.
+*   [**Manual de Usuario**](./USER_MANUAL.md): Guías para usuarios de la Tienda y el ERP.
+*   [**Guía del Desarrollador**](./DEVELOPER_GUIDE.md): Pautas de contribución y configuración.
+*   [**Política de Seguridad**](./SECURITY.md): Modelos de autenticación y cumplimiento.
+*   [**Guía de Despliegue**](./DEPLOYMENT_GUIDE.md): Estrategias de lanzamiento a producción.
 
 ---
 
-## 📞 Support & License
+## Soporte y Licencia
 
-**License**: MIT
-**Support**: contact@xsafe.com
-**Emergency**: +1 800 XSAFE 99 (24/7 Production Support)
+**Licencia**: MIT
+**Soporte**: contact@xsafe.com
+**Emergencias**: +1 800 XSAFE 99 (Soporte de Producción 24/7)
 
 ---
 *Powered by OLYMP-IA Enterprise Solutions*
