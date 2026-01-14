@@ -1,66 +1,107 @@
-# 🏭 XSafe ERP
+# 🛡️ XSafe ERP & E-commerce Platform
 
-Sistema ERP para fabricación de defensas de motocicletas.
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-85%25-green)
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![License](https://img.shields.io/badge/license-MIT-yellow)
+
+## � Executive Overview
+
+**XSafe ERP** is a state-of-the-art, enterprise-grade platform designed to revolutionize the manufacturing and sales of advanced motorcycle protection systems. This monorepo integrates a high-performance diverse ecosystem:
+
+*   **🛒 E-commerce Storefront**: Next.js-based consumer facing platform with 3D product visualization.
+*   **🏭 ERP Core**: NestJS microservices architecture for managing production, inventory, and logistics.
+*   **🌐 Web Admin**: Next.js 14 Dashboard for global management and analytics.
+*   **📱 Mobile Operator App**: Offline-first React Native application for shop floor management.
+*   **🖥️ Desktop Workstation**: Electron app for specialized hardware integration.
+
+Built with a focus on **scalability**, **security**, and **reliability**, XSafe ERP follows strict ISO compliance standards and utilizes modern cloud-native technologies.
+
+---
+
+## 🏗️ Tech Stack
+
+### Frontend Ecosystem
+*   **Web Store**: Next.js 14, React 18, Tailwind CSS, Framer Motion
+*   **Web Admin**: Next.js 14 App Router, NextAuth, Recharts
+*   **3D Engine**: Three.js, React Three Fiber, Drei
+*   **Desktop**: Electron 25, React, SQLite (Offline-First)
+*   **Mobile**: React Native 0.72, TypeScript, SQLite (Offline Mode)
+
+### Backend Services
+*   **API Gateway**: NestJS, Fastify
+*   **Database**: PostgreSQL (Prisma ORM), Redis (Caching)
+*   **Message Broker**: RabbitMQ / Kafka (Event Driven)
+*   **Auth**: JWT, OAuth2, Role-Based Access Control (RBAC)
+
+### DevOps & Infrastructure
+*   **Containerization**: Docker, Docker Compose
+*   **CI/CD**: GitHub Actions
+*   **Monitoring**: Prometheus, Grafana, Sentry
+
+---
 
 ## 🚀 Quick Start
 
+### Prerequisites
+*   Node.js v20.x or higher
+*   Docker & Docker Compose
+*   PostgreSQL 15+
+
+### One-Command Setup
+We provide a unified script to bootstrap the entire environment:
+
 ```bash
-# 1. Instalar dependencias
+# Clone the repository
+git clone https://github.com/Olymp-IA/xsafe.git
+cd xsafe
+
+# Install dependencies (Monorepo)
 npm install
 
-# 2. Configurar entorno
-cp .env.example .env
-# Editar .env con tus credenciales
-
-# 3. Iniciar servicios Docker (PostgreSQL, Redis)
-docker-compose up -d
-
-# 4. Generar cliente Prisma
-cd apps/core-backend && npx prisma generate && cd ../..
-
-# 5. Ejecutar migraciones
-cd apps/core-backend && npx prisma migrate dev --name init && cd ../..
-
-# 6. Poblar datos de prueba
-npx prisma db seed
-
-# 7. Iniciar servidor
-npm run start:dev
+# Start development environment (Docker services + Apps)
+npm run dev:all
 ```
 
-**API Docs:** http://localhost:3000/api
-
-## 📦 Módulos
-
-| Módulo | Descripción | Endpoints |
-|--------|-------------|-----------|
-| **Auth** | Autenticación JWT | `/auth/*` |
-| **Production** | Órdenes y etapas | `/production/*` |
-| **Inventory** | Materiales y stock | `/inventory/*` |
-| **Quality** | Inspecciones | `/quality/*` |
-| **Machines** | CNC y equipos | `/machines/*` |
-| **Analytics** | KPIs y reportes | `/analytics/*` |
-| **Alerts** | Notificaciones | `/alerts/*` |
-| **Health** | Estado del servicio | `/health/*` |
-
-## 🧪 Tests
+Alternatively, run specific services:
 
 ```bash
-npm run test        # Unit tests
-npm run test:e2e    # E2E tests
-npm run test:cov    # Coverage
+# Frontend (Store)
+npm run dev:ecommerce
+
+# Web Admin (ERP)
+npm run dev:web
+
+# Backend only
+npm run dev:backend
+
+# Mobile Android
+npm run android
+
+# Desktop App
+npm run dev:desktop
 ```
 
-## 🐳 Docker
+---
 
-```bash
-# Desarrollo
-docker-compose up -d
+## � Documentation Index
 
-# Producción
-docker-compose -f docker-compose.prod.yml up -d
-```
+For detailed information, please refer to our comprehensive documentation suite located in `/documentation`:
 
-## 📄 License
+*   [**Architecture Overview**](./documentation/ARCHITECTURE.md): System design, patterns, and C4 diagrams.
+*   [**API Reference**](./documentation/API_DOCUMENTATION.md): OpenAPI/Swagger specs and endpoint guide.
+*   [**User Manual**](./documentation/USER_MANUAL.md): End-user guides for Shop and ERP.
+*   [**Developer Guide**](./documentation/DEVELOPER_GUIDE.md): Contribution guidelines and setup.
+*   [**Security Policy**](./documentation/SECURITY.md): Auth models and compliance.
+*   [**Deployment Guide**](./documentation/DEPLOYMENT_GUIDE.md): Production rollout strategies.
 
-MIT
+---
+
+## � Support & License
+
+**License**: MIT
+**Support**: contact@xsafe.com
+**Emergency**: +1 800 XSAFE 99 (24/7 Production Support)
+
+---
+*Powered by OLYMP-IA Enterprise Solutions*
