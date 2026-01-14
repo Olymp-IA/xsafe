@@ -1,7 +1,6 @@
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import { useScene } from '../../context';
+import { MorphingText } from '../ui/MorphingText';
 import './CategoryList.css';
 
 /**
@@ -12,44 +11,36 @@ import './CategoryList.css';
  * Updates on wheel rotation/interaction.
  */
 const CategoryList: React.FC = () => {
-    const {
-        categories,
-        activeCategory,
-        setActiveCategory
-    } = useScene();
+    const { categories, activeCategory, setActiveCategory } = useScene();
 
-    // Auto-scroll logic could go here if the list is long, 
-    // but with ~5 items, static vertical layout is fine.
+    const activeIndex = categories.findIndex(c => c.id === activeCategory.id);
+
+    // Initial load fallback
+    const safeIndex = activeIndex === -1 ? 0 : activeIndex;
+
+    const handleWheel = (e: React.WheelEvent) => {
+        if (e.deltaY > 0) {
+            setActiveCategory((safeIndex + 1) % categories.length);
+        } else {
+            setActiveCategory((safeIndex - 1 + categories.length) % categories.length);
+        }
+    };
+
+    const handleClick = () => {
+        setActiveCategory((safeIndex + 1) % categories.length);
+    };
 
     return (
-        <div className="category-list-container">
-            <div className="category-list-track">
-                {categories.map((category, index) => {
-                    const isActive = activeCategory.id === category.id;
-
-                    return (
-                        <motion.div
-                            key={category.id}
-                            className={`category-list-item ${isActive ? 'active' : ''}`}
-                            onClick={() => setActiveCategory(index)}
-                            animate={{
-                                opacity: isActive ? 1 : 0.3,
-                                scale: isActive ? 1.1 : 1,
-                                x: isActive ? 20 : 0,
-                                filter: isActive ? 'blur(0px)' : 'blur(1px)',
-                                color: isActive ? activeCategory.colors.primary : '#ffffff',
-                            }}
-                            transition={{
-                                type: "spring",
-                                stiffness: 300,
-                                damping: 30
-                            }}
-                        >
-                            {category.name}
-                        </motion.div>
-                    );
-                })}
-            </div>
+        <div
+            className="category-list-container"
+            onWheel={handleWheel}
+            onClick={handleClick}
+            style={{ pointerEvents: 'auto', cursor: 'grab' }} // Enable events
+        >
+            <MorphingText
+                texts={categories.map(c => c.name)}
+                selectedIndex={safeIndex}
+            />
         </div>
     );
 };

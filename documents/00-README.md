@@ -90,6 +90,7 @@ xsafe-erp/
 | Versión | Fecha | Autor | Cambios |
 |---------|-------|-------|---------|
 | 1.0.0 | 2026-01-14 | Sistema | Creación inicial |
+| 1.0.1 | 2026-01-14 | Dev | Implementación Login Garage y UI Updates |
 
 ## Aprobaciones
 

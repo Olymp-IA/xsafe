@@ -5,7 +5,10 @@
     "author": "",
     "private": true,
     "workspaces": [
-        "apps/*",
+        "apps/core-backend",
+        "apps/ecommerce-frontend",
+        "apps/erp-web",
+        "apps/workshop-monitor",
         "packages/*"
     ],
     "license": "UNLICENSED",

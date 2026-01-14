@@ -3,4 +3,4 @@ export { default as Header } from './Header';
 export { default as Wheel } from './Wheel/Wheel';
 export { default as CategoryList } from './CategoryList/CategoryList';
 export { default as BrandingX } from './BrandingX/BrandingX';
-export { default as Footer } from './Footer/Footer';
+
