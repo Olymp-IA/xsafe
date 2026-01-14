@@ -1,0 +1,42 @@
+erDiagram
+    Users ||--o{ Orders : "places"
+    Users {
+        string id PK
+        string email
+        string role
+        string password_hash
+    }
+    
+    Orders ||--|{ OrderItems : "contains"
+    Orders {
+        string id PK
+        string status
+        date created_at
+        date due_date
+        float total_amount
+    }
+
+    Products ||--o{ OrderItems : "includes"
+    Products {
+        string id PK
+        string name
+        float price
+        int stock
+    }
+
+    InventoryItems ||--o{ MaterialUsage : "consumed_in"
+    InventoryItems {
+        string id PK
+        string sku
+        string name
+        float quantity
+    }
+
+    ProductionStages ||--o{ Orders : "tracks"
+    ProductionStages {
+        string id PK
+        string name
+        string status
+        timestamp started_at
+        timestamp ended_at
+    }

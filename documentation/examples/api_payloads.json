@@ -1,0 +1,38 @@
+{
+    "production_order": {
+        "create_request": {
+            "customer_name": "Empresa Ejemplo S.A.",
+            "motorcycle_model": "Honda CB500X",
+            "product_type": "Crash Bar Heavy Duty",
+            "priority": "HIGH",
+            "due_date": "2024-12-31T00:00:00.000Z",
+            "notes": "Pintura personalizada color rojo mate"
+        },
+        "create_response_201": {
+            "id": "ord_8f7d6a5",
+            "order_number": "ORD-202412-0042",
+            "status": "PENDING",
+            "estimated_completion": "2024-12-30T10:00:00.000Z"
+        }
+    },
+    "inventory": {
+        "movement_request": {
+            "item_id": "inv_steel_pipe_22mm",
+            "type": "OUTBOUND",
+            "quantity": 12.5,
+            "reason": "PRODUCTION",
+            "reference_id": "ord_8f7d6a5"
+        }
+    },
+    "auth": {
+        "login_payload": {
+            "email": "operario@xsafe.com",
+            "password": "hashed_secret_password"
+        },
+        "token_response": {
+            "access_token": "eyJhbGciOi...",
+            "refresh_token": "dGhpc19pcy...",
+            "expires_in": 3600
+        }
+    }
+}

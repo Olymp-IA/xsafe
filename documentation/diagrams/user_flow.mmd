@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant Cliente
+    participant Tienda
+    participant ERP
+    participant Operario
+    
+    Cliente->>Tienda: Realiza Pedido (Defensa X1)
+    Tienda->>ERP: Crea Orden de Producción
+    ERP->>ERP: Asigna Prioridad y Materiales
+    ERP-->>Operario: Notificación de Nueva Orden
+    Operario->>ERP: Inicia Etapa de Corte
+    ERP->>ERP: Actualiza Inventario (Materiales)
+    Operario->>ERP: Finaliza Corte / Inicia Soldadura
+    Operario->>ERP: Finaliza Soldadura / Inicia Pintura
+    Operario->>ERP: Control de Calidad Aprobado
+    ERP->>Cliente: Notificación "Tu pedido está listo"
