@@ -3,7 +3,7 @@
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![Coverage](https://img.shields.io/badge/coverage-85%25-green)
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-yellow)
+![License](https://img.shields.io/badge/license-Private-red)
 
 ## Resumen Ejecutivo
 
@@ -36,7 +36,7 @@ graph TB
         Mobile[App Móvil\n(React Native)]
         Desktop[App Escritorio\n(Electron)]
         DB[(PostgreSQL)]
-        Redis[(Redis Cache)]
+        Redis[(Redis Caché)]
     end
     
     User -->|Compra| Store
@@ -84,8 +84,9 @@ sequenceDiagram
 *   **Tienda Web**: Next.js 14, React 18, Tailwind CSS, Framer Motion
 *   **Administración Web**: Next.js 14 App Router, NextAuth, Recharts
 *   **Motor 3D**: Three.js, React Three Fiber, Drei
-*   **Escritorio**: Electron 25, React, SQLite (Offline-First)
+*   **Gestión de Estado**: Zustand, React Query
 *   **Móvil**: React Native 0.72, TypeScript, SQLite (Modo Offline)
+*   **Escritorio**: Electron 25, React, SQLite (Offline-First)
 
 ### Servicios Backend
 *   **API Gateway**: NestJS, Fastify
@@ -153,14 +154,6 @@ Para información detallada, por favor consulte nuestra suite de documentación 
 *   [**Guía del Desarrollador**](./documentation/DEVELOPER_GUIDE.md): Pautas de contribución y configuración.
 *   [**Política de Seguridad**](./documentation/SECURITY.md): Modelos de autenticación y cumplimiento.
 *   [**Guía de Despliegue**](./documentation/DEPLOYMENT_GUIDE.md): Estrategias de lanzamiento a producción.
-
----
-
-## Soporte y Licencia
-
-**Licencia**: MIT
-**Soporte**: contact@xsafe.com
-**Emergencias**: +1 800 XSAFE 99 (Soporte de Producción 24/7)
 
 ---
 *Powered by OLYMP-IA Enterprise Solutions*
