@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanium Monolith Design System | XSafe ERP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Iconography Proposal: Using Feather Icons for clean, engineered look -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        :root {
+            /* TITANIUM MONOLITH PALETTE */
+            --bg-color: #0E0E0E;
+            /* Deepest Carbon */
+            --panel-bg: #161616;
+            /* Surface Grey */
+            --border-color: #2A2A2A;
+            /* Structural Lines */
+            --text-main: #E0E0E0;
+            /* Titanium White */
+            --text-muted: #888888;
+            /* Muted Metal */
+            --accent-primary: #D4D4D4;
+            /* Polished Silver */
+            --accent-active: #FFFFFF;
+            /* Highlight */
+            --status-success: #2E8B57;
+            /* Industrial Green */
+            --status-warning: #DAA520;
+            /* Warning Orange */
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-brand: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            /* Engineering first */
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 60px;
+        }
+
+        /* Sidebar Nav */
+        .sidebar {
+            position: sticky;
+            top: 40px;
+            align-self: start;
+        }
+
+        .brand-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .x-icon {
+            width: 40px;
+            height: auto;
+        }
+
+        .nav-link {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 8px 0;
+            transition: color 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        /* Main Content */
+        section {
+            margin-bottom: 80px;
+            scroll-margin-top: 40px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--accent-active);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        /* Color Chips */
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .swatch-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .swatch {
+            height: 80px;
+            width: 100%;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .hex-code {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        /* Typography */
+        .type-spec {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+        }
+
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Iconography */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 20px;
+        }
+
+        .icon-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .icon-card:hover {
+            border-color: var(--accent-primary);
+            background: #202020;
+        }
+
+        .icon-card i {
+            margin-bottom: 10px;
+            color: var(--accent-primary);
+        }
+
+        .icon-name {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Buttons */
+        .btn {
+            background: transparent;
+            border: 1px solid var(--accent-primary);
+            color: var(--text-main);
+            padding: 12px 24px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-color);
+        }
+
+        .btn-filled {
+            background: var(--text-main);
+            color: var(--bg-color);
+            border: 1px solid var(--text-main);
+        }
+
+        .btn-filled:hover {
+            background: #FFFFFF;
+            border-color: #FFFFFF;
+        }
+
+        /* Inputs */
+        .input-group {
+            margin-bottom: 20px;
+            max-width: 400px;
+        }
+
+        .label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .input {
+            width: 100%;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input:focus {
+            border-color: var(--accent-primary);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--border-color);
+            transition: background 0.2s;
+        }
+
+        .card:hover::before {
+            background: var(--accent-primary);
+        }
+
+        /* --------------------------------------------------------- */
+        /* OLYMPIA FOOTER STYLES (Replicated) */
+        /* --------------------------------------------------------- */
+        .olympia-footer {
+            margin-top: 100px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2));
+            width: 100%;
+        }
+
+        .footer-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 32px 0;
+        }
+
+        .client-copyright {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .branding {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .branding:hover {
+            transform: scale(1.02);
+        }
+
+        .powered-by {
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 0.08em;
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 40%, #FFE066 60%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2));
+            line-height: 1;
+        }
+
+        .branding:hover .logo {
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+        }
+
+        .symbol {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .symbol-xi {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 8px;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+
+        .name {
+            font-weight: 700;
+        }
+
+        .domain {
+            font-weight: 400;
+            opacity: 0.8;
+            font-size: 0.85em;
+            margin-left: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand-header">
+                <!-- Our Isolated SVG Icon -->
+                <img src="./assets/x-icon.svg" class="x-icon" alt="XSafe Icon">
+                <span style="font-weight: 700; letter-spacing: -0.02em;">XSAFE<br>MOTO</span>
+            </div>
+            <nav>
+                <a href="#palette" class="nav-link active">Color Palette</a>
+                <a href="#typography" class="nav-link">Typography</a>
+                <a href="#iconography" class="nav-link">Iconography</a>
+                <a href="#components" class="nav-link">UI Components</a>
+                <a href="#layout" class="nav-link">Layout Grid</a>
+            </nav>
+        </aside>
+
+        <!-- Main Spec -->
+        <main>
+            <section id="header">
+                <h1 style="font-size: 3rem; margin-bottom: 10px; line-height: 1;">Titanium Monolith</h1>
+                <p style="color: var(--text-muted); font-size: 1.2rem;">Detailed Design Specification v1.0</p>
+            </section>
+
+            <section id="palette">
+                <h2>Color Palette</h2>
+                <div class="palette-grid">
+                    <div class="swatch-card">
+                        <div class="swatch" style="background: var(--bg-color);"></div>
+                        <strong>Deepest Carbon</strong>
+                        <span class="hex-code">#0E0E0E</span>
+                        <span class="hex-code">var(--bg-color)</span>
+                    </div>
+                    <div class="swatch-card">
+                        <div class="swatch" style="background: var(--panel-bg);"></div>
+                        <strong>Surface Grey</strong>
+                        <span class="hex-code">#161616</span>
+                        <span class="hex-code">var(--panel-bg)</span>
+                    </div>
+                    <div class="swatch-card">
+                        <div class="swatch" style="background: var(--border-color);"></div>
+                        <strong>Structural Line</strong>
+                        <span class="hex-code">#2A2A2A</span>
+                        <span class="hex-code">var(--border-color)</span>
+                    </div>
+                    <div class="swatch-card">
+                        <div class="swatch" style="background: var(--text-main);"></div>
+                        <strong>Titanium White</strong>
+                        <span class="hex-code">#E0E0E0</span>
+                        <span class="hex-code">var(--text-main)</span>
+                    </div>
+                    <div class="swatch-card">
+                        <div class="swatch" style="background: var(--accent-primary);"></div>
+                        <strong>Polished Silver</strong>
+                        <span class="hex-code">#D4D4D4</span>
+                        <span class="hex-code">var(--accent-primary)</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="typography">
+                <h2>Typography</h2>
+                <div class="type-spec font-mono">
+                    <h3 style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">PRIMARY (ENGINEERING)
+                    </h3>
+                    <div style="font-size: 2.5rem;">JetBrains Mono</div>
+                    <p style="color: var(--text-muted);">Used for all data, headers, and UI controls. Provides a
+                        technical, precise "dashboard" feel.</p>
+                </div>
+                <div class="type-spec" style="font-family: 'Inter', sans-serif;">
+                    <h3 style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">SECONDARY
+                        (READABILITY)</h3>
+                    <div style="font-size: 2.5rem; font-weight: 600;">Inter</div>
+                    <p style="color: var(--text-muted);">Used for long-form text and footer elements where readability
+                        is paramount.</p>
+                </div>
+            </section>
+
+            <section id="iconography">
+                <h2>Iconography</h2>
+                <p style="margin-bottom: 20px; color: var(--text-muted);">Primary Icon: The isolated 'X' vector
+                    (displayed in Sidebar). <br>System Icons: <strong>Feather Icons</strong> (Stroke 1.5px, Sharp edges
+                    preferred).</p>
+                <div class="icon-grid">
+                    <div class="icon-card">
+                        <img src="./assets/x-icon.svg" style="width: 32px; height: 32px; filter: grayscale(1);">
+                        <span class="icon-name">Brand X</span>
+                    </div>
+                    <!-- System Icons -->
+                    <div class="icon-card">
+                        <i data-feather="settings"></i>
+                        <span class="icon-name">settings</span>
+                    </div>
+                    <div class="icon-card">
+                        <i data-feather="box"></i>
+                        <span class="icon-name">inventory</span>
+                    </div>
+                    <div class="icon-card">
+                        <i data-feather="truck"></i>
+                        <span class="icon-name">logistics</span>
+                    </div>
+                    <div class="icon-card">
+                        <i data-feather="shield"></i>
+                        <span class="icon-name">security</span>
+                    </div>
+                    <div class="icon-card">
+                        <i data-feather="zap"></i>
+                        <span class="icon-name">power</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="components">
+                <h2>UI Components</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                    <div>
+                        <h3 style="font-size: 1rem; color: var(--text-muted); margin-bottom: 20px;">BUTTONS</h3>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <button class="btn btn-filled">Primary Action</button>
+                            <button class="btn">Secondary</button>
+                            <button class="btn"><i data-feather="download"></i> With Icon</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="font-size: 1rem; color: var(--text-muted); margin-bottom: 20px;">INPUTS</h3>
+                        <div class="input-group">
+                            <label class="label">SERIAL NUMBER</label>
+                            <input type="text" class="input" placeholder="XS-2026-001">
+                        </div>
+                        <div class="input-group">
+                            <label class="label">LOCATION ID</label>
+                            <input type="text" class="input" value="WH-SECTION-A" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <h3 style="font-size: 1rem; color: var(--text-muted); margin-bottom: 20px;">DATA CARDS</h3>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+                        <article class="card">
+                            <h4 style="margin: 0 0 10px 0;">INVENTORY STATUS</h4>
+                            <div style="font-size: 2rem; font-weight: 700; margin-bottom: 5px;">98.4%</div>
+                            <span style="color: var(--status-success); font-size: 0.8rem;">● OPTIMAL</span>
+                        </article>
+                        <article class="card">
+                            <h4 style="margin: 0 0 10px 0;">PENDING ORDERS</h4>
+                            <div style="font-size: 2rem; font-weight: 700; margin-bottom: 5px;">12</div>
+                            <span style="color: var(--status-warning); font-size: 0.8rem;">● ACTION REQUIRED</span>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- GLOBAL FOOTER -->
+    <footer class="olympia-footer">
+        <div class="footer-wrapper">
+            <p class="client-copyright">
+                © 2026 XSafe ERP. Todos los derechos reservados.
+            </p>
+            <a href="https://olymp-ia.cl" target="_blank" rel="noopener noreferrer" class="branding">
+                <span class="powered-by">powered by</span>
+                <span class="logo">
+                    <span class="symbol">Ω</span>
+                    <span class="name">OLYMP</span>
+                    <span class="symbol-xi">Ξ</span>
+                    <span class="name">IA</span>
+                    <span class="domain">.cl</span>
+                </span>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+
+</html>

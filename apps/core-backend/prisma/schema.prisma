@@ -10,8 +10,1014 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ============================================
+// CORE MODELS
+// ============================================
+
+model Workshop {
+  id        String         @id @default(cuid())
+  name      String
+  taxId     String         @unique
+  address   String
+  phone     String
+  email     String         @unique
+  status    WorkshopStatus @default(ACTIVE)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  users     User[]
+  orders    ProductionOrder[]
+  materials Material[]
+  machines  Machine[]
+  products  Product[]
+  customers Customer[]
+  suppliers Supplier[]
+  
+  // Ecommerce relations
+  ecommerceStore     EcommerceStore?
+  ecommerceCustomers EcommerceCustomer[]
+  ecommerceOrders    EcommerceOrder[]
+  productReviews     ProductReview[]
+  coupons            Coupon[]
+  shippingMethods    ShippingMethod[]
+  paymentMethods     PaymentMethod[]
+  ecommerceCategories EcommerceCategory[]
+}
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id         String   @id @default(cuid())
+  email      String   @unique
+  password   String
+  firstName  String
+  lastName   String
+  role       UserRole @default(OPERATOR)
+  workshopId String
+  workshop   Workshop @relation(fields: [workshopId], references: [id])
+
+  qualityChecks QualityCheck[] @relation("Inspector")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workshopId])
+}
+
+model Customer {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  phone      String?
+  address    String?
+  workshopId String
+  workshop   Workshop @relation(fields: [workshopId], references: [id])
+
+  orders ProductionOrder[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workshopId])
+}
+
+model Supplier {
+  id         String   @id @default(cuid())
+  name       String
+  email      String   @unique
+  phone      String?
+  address    String?
+  workshopId String?
+  workshop   Workshop? @relation(fields: [workshopId], references: [id])
+
+  materials Material[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workshopId])
+}
+
+
+// ============================================
+// PRODUCT CATALOG
+// ============================================
+
+model MotorcycleModel {
+  id       String         @id @default(cuid())
+  brand    String         // Honda, Yamaha, BMW, etc.
+  model    String         // CBR600RR, R1, S1000RR, etc.
+  year     Int
+  engineCC Int
+  type     MotorcycleType // Sport, Touring, Adventure, Cruiser
+
+  compatibleProducts Product[]
+
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id          String          @id @default(cuid())
+  sku         String          @unique
+  name        String          // "Defensa Honda CB500X", "Slider Yamaha MT-07"
+  description String?
+  category    ProductCategory // DEFENSE, CRASH_BAR, SLIDER, LUGGAGE_RACK
+  price       Float
+
+  // Technical specifications
+  materialType MaterialType
+  weight       Float     // in kg
+  dimensions   Json      // {length, width, height}
+  finishType   FinishType // PAINTED, ANODIZED, POLISHED
+
+  compatibleModels MotorcycleModel[]
+
+  workshopId String
+  workshop   Workshop @relation(fields: [workshopId], references: [id])
+
+  orderItems OrderItem[]
+  
+  // Ecommerce fields
+  slug             String?   @unique
+  shortDescription String?
+  metaTitle        String?
+  metaDescription  String?
+  
+  // Ecommerce relations
+  variants         ProductVariant[]
+  reviews          ProductReview[]
+  ecomCategories   EcommerceCategory[]
+  
+  // Moto-specific
+  fitNotes         String?
+  installationTime String?
+  toolRequirements String[]
+  compatibilityNotes String?
+  
+  // Videos
+  youtubeVideoIds  String[]
+  installationVideoUrl String?
+  
+  // Warranty
+  warrantyMonths   Int?      @default(12)
+  
+  // Publishing
+  isFeatured       Boolean   @default(false)
+  isPublished      Boolean   @default(false)
+  publishedAt      DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workshopId])
+}
+
+// ============================================
+// INVENTORY
+// ============================================
+
+model Material {
+  id        String       @id @default(cuid())
+  code      String       @unique
+  name      String
+  type      MaterialType // ACERO_4130, ALUMINIO_6061, POLICARBONATO, etc.
+  thickness Float        // in mm
+  width     Float        // in mm
+  length    Float        // in mm
+  quantity  Float        // in meters/kilograms
+  unit      MaterialUnit
+
+  minStock Float? // minimum stock level
+  maxStock Float? // maximum stock level
+
+  supplierId String?
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+  workshopId String
+  workshop   Workshop  @relation(fields: [workshopId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workshopId])
+}
+
+// ============================================
+// PRODUCTION
+// ============================================
+
+model ProductionOrder {
+  id          String @id @default(cuid())
+  orderNumber String @unique
+  customerId  String
+  customer    Customer @relation(fields: [customerId], references: [id])
+
+  items OrderItem[]
+  stages ProductionStage[]
+
+  // Production process
+  status   ProductionStatus @default(DESIGN_APPROVAL)
+  priority PriorityLevel    @default(MEDIUM)
+
+  // Dates
+  dueDate     DateTime
+  startedAt   DateTime?
+  completedAt DateTime?
+
+  // Metadata
+  notes      String?
+  workshopId String
+  workshop   Workshop @relation(fields: [workshopId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Ecommerce link
+  ecommerceOrders EcommerceOrder[]
+
+  @@index([workshopId])
+  @@index([customerId])
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  orderId   String
+  order     ProductionOrder @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
+}
+
+model ProductionStage {
+  id      String @id @default(cuid())
+  orderId String
+  order   ProductionOrder @relation(fields: [orderId], references: [id])
+
+  stageType ProductionStageType // CUTTING, BENDING, WELDING, POLISHING, PAINTING
+  status    StageStatus         @default(PENDING)
+
+  assignedTo String?   // User ID
+  machineId  String?   // Machine ID
+  machine    Machine?  @relation(fields: [machineId], references: [id])
+  startedAt  DateTime?
+  completedAt DateTime?
+
+  // Quality control
+  qualityCheck QualityCheck?
+
+  // Estimated vs actual times
+  estimatedHours Float
+  actualHours    Float?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([orderId])
+}
+
+// ============================================
+// MACHINERY
+// ============================================
+
+model Machine {
+  id     String        @id @default(cuid())
+  code   String        @unique
+  name   String        // "Laser cutter", "CNC bender", "TIG welder"
+  type   MachineType
+  status MachineStatus @default(AVAILABLE)
+
+  // Specifications
+  brand    String
+  model    String
+  capacity String      // "10mm steel", "1500W"
+
+  // Maintenance
+  lastMaintenance DateTime?
+  nextMaintenance DateTime?
+
+  workshopId String
+  workshop   Workshop @relation(fields: [workshopId], references: [id])
+
+  productionStages ProductionStage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workshopId])
+}
+
+// ============================================
+// QUALITY CONTROL
+// ============================================
+
+model QualityCheck {
+  id      String          @id @default(cuid())
+  stageId String          @unique
+  stage   ProductionStage @relation(fields: [stageId], references: [id])
+
+  inspectorId String
+  inspector   User   @relation("Inspector", fields: [inspectorId], references: [id])
+
+  status QualityStatus @default(PENDING)
+  notes  String?
+
+  // Specific checklist for defenses
+  measurements Json      // {welds: number, dimensions: [...], finish: string}
+  photos       String[]  // Photo URLs
+
+  passed    Boolean?
+  createdAt DateTime @default(now())
+
+  @@index([inspectorId])
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum WorkshopStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  SUPERVISOR
+  OPERATOR
+  QUALITY_INSPECTOR
+}
+
+enum MaterialType {
+  ACERO_4130
+  ACERO_1020
+  ALUMINIO_6061
+  ALUMINIO_7075
+  POLICARBONATO
+  ACERO_INOXIDABLE
+}
+
+enum MaterialUnit {
+  METER
+  KILOGRAM
+  SHEET
+  UNIT
+}
+
+enum ProductCategory {
+  DEFENSE
+  CRASH_BAR
+  SLIDER
+  ENGINE_GUARD
+  LUGGAGE_RACK
+  WINDSCREEN
+  SIDE_CASE
+}
+
+enum MotorcycleType {
+  SPORT
+  TOURING
+  ADVENTURE
+  CRUISER
+  SCOOTER
+  DIRT
+}
+
+enum ProductionStatus {
+  DESIGN_APPROVAL
+  MATERIAL_PREPARATION
+  CUTTING
+  BENDING
+  WELDING
+  GRINDING
+  POLISHING
+  FINISHING
+  QUALITY_CHECK
+  PACKAGING
+  READY_FOR_SHIPPING
+  COMPLETED
+  CANCELLED
+}
+
+enum ProductionStageType {
+  CUTTING
+  BENDING
+  WELDING
+  GRINDING
+  POLISHING
+  PAINTING
+  ANODIZING
+  ASSEMBLY
+  PACKAGING
+}
+
+enum StageStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  BLOCKED
+}
+
+enum MachineType {
+  LASER_CUTTER
+  CNC_BENDER
+  TIG_WELDER
+  MIG_WELDER
+  GRINDER
+  POLISHER
+  PAINT_BOOTH
+  ASSEMBLY_TABLE
+}
+
+enum MachineStatus {
+  AVAILABLE
+  IN_USE
+  MAINTENANCE
+  BROKEN
+}
+
+enum QualityStatus {
+  PENDING
+  IN_PROGRESS
+  PASSED
+  FAILED
+  REWORK_REQUIRED
+}
+
+enum PriorityLevel {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum FinishType {
+  PAINTED
+  ANODIZED
+  POLISHED
+  POWDER_COATED
+  RAW
+}
+
+// ============================================
+// ECOMMERCE MODELS
+// ============================================
+
+model EcommerceStore {
+  id          String        @id @default(cuid())
+  workshopId  String        @unique
+  workshop    Workshop      @relation(fields: [workshopId], references: [id])
+  
+  // Store configuration
+  storeName   String        @unique
+  storeUrl    String        @unique
+  description String?
+  logoUrl     String?
+  faviconUrl  String?
+  
+  // Sales configuration
+  currency    String        @default("USD")
+  language    String        @default("es_ES")
+  timezone    String        @default("America/Buenos_Aires")
+  
+  // Social links
+  socialLinks Json?         // {facebook, instagram, youtube, tiktok}
+  
+  // Shipping and tax
+  taxRate     Float         @default(0.21)
+  
+  // Status
+  status      StoreStatus   @default(DRAFT)
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  
+  // Relations
+  shippingMethods ShippingMethod[]
+  paymentMethods  PaymentMethod[]
+  
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model ProductVariant {
+  id          String    @id @default(cuid())
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id])
+  
+  // Variant specific
+  sku         String    @unique
+  name        String    // "Defensa Honda CB500X - Negro Mate"
+  
+  // Variable attributes
+  attributes  Json      // {color: "Negro Mate", finish: "Mate"}
+  
+  // Price and stock
+  price       Float
+  comparePrice Float?   // Previous price to show discount
+  cost        Float
+  
+  // Stock
+  stock       Int       @default(0)
+  lowStockThreshold Int @default(5)
+  isAvailable Boolean   @default(true)
+  
+  // Images
+  images      String[]  // URLs
+  
+  // Shipping
+  weight      Float?    // in kg
+  dimensions  Json?     // {length, width, height}
+  
+  // Relations
+  cartItems   CartItem[]
+  ecommerceOrderItems EcommerceOrderItem[]
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([productId])
+}
+
+model EcommerceCustomer {
+  id          String    @id @default(cuid())
+  workshopId  String
+  workshop    Workshop  @relation(fields: [workshopId], references: [id])
+  
+  // Personal info
+  email       String    
+  password    String?
+  firstName   String
+  lastName    String
+  phone       String?
+  avatarUrl   String?
+  
+  // Social login
+  socialId    String?
+  socialProvider SocialProvider?
+  
+  // Preferences
+  newsletter  Boolean   @default(false)
+  marketing   Boolean   @default(false)
+  
+  // Metrics
+  totalOrders Int       @default(0)
+  totalSpent  Float     @default(0)
+  
+  // Status
+  status      EcomCustomerStatus @default(ACTIVE)
+  
+  // Relations
+  carts       Cart[]
+  orders      EcommerceOrder[]
+  reviews     ProductReview[]
+  addresses   Address[]
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@unique([workshopId, email])
+  @@index([workshopId])
+}
+
+model Cart {
+  id          String    @id @default(cuid())
+  customerId  String?
+  customer    EcommerceCustomer? @relation(fields: [customerId], references: [id])
+  
+  // Guest cart
+  sessionId   String?   @unique
+  guestEmail  String?
+  guestName   String?
+  
+  // Items
+  items       CartItem[]
+  
+  // Cart info
+  currency    String    @default("USD")
+  notes       String?
+  
+  // Calculated totals
+  subtotal    Float     @default(0)
+  taxAmount   Float     @default(0)
+  shippingAmount Float  @default(0)
+  discountAmount Float  @default(0)
+  total       Float     @default(0)
+  
+  // Coupon
+  couponCode  String?
+  coupon      Coupon?   @relation(fields: [couponCode], references: [code])
+  
+  // Abandoned cart tracking
+  lastActive  DateTime  @default(now())
+  isAbandoned Boolean   @default(false)
+  reminderSent Boolean  @default(false)
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([customerId])
+}
+
+model CartItem {
+  id          String    @id @default(cuid())
+  cartId      String
+  cart        Cart      @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  variantId   String
+  variant     ProductVariant @relation(fields: [variantId], references: [id])
+  
+  quantity    Int       @default(1)
+  price       Float     // Price at time of adding
+  
+  // Customization
+  customization Json?   // {engraving: "My text", color: "#FF0000"}
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@unique([cartId, variantId])
+  @@index([cartId])
+}
+
+model EcommerceOrder {
+  id          String    @id @default(cuid())
+  orderNumber String    @unique
+  workshopId  String
+  workshop    Workshop  @relation(fields: [workshopId], references: [id])
+  customerId  String?
+  customer    EcommerceCustomer? @relation(fields: [customerId], references: [id])
+  
+  // Customer snapshot
+  customerEmail      String
+  customerFirstName  String
+  customerLastName   String
+  customerPhone      String?
+  
+  // Items
+  items       EcommerceOrderItem[]
+  
+  // Addresses
+  shippingAddressId String
+  shippingAddress   Address @relation("EcomOrderShipping", fields: [shippingAddressId], references: [id])
+  billingAddressId  String
+  billingAddress    Address @relation("EcomOrderBilling", fields: [billingAddressId], references: [id])
+  
+  // Shipping
+  shippingMethod    String?
+  shippingAmount    Float   @default(0)
+  trackingNumber    String?
+  trackingUrl       String?
+  
+  // Payment
+  paymentMethod     String
+  paymentStatus     EcomPaymentStatus @default(PENDING)
+  paymentIntentId   String?
+  transactionId     String?
+  
+  // Totals
+  subtotal          Float
+  taxAmount         Float
+  discountAmount    Float   @default(0)
+  total             Float
+  
+  // Coupon
+  couponCode        String?
+  coupon            Coupon? @relation(fields: [couponCode], references: [code])
+  
+  // Order status
+  status            EcomOrderStatus @default(PENDING)
+  
+  // Important dates
+  paidAt            DateTime?
+  shippedAt         DateTime?
+  deliveredAt       DateTime?
+  cancelledAt       DateTime?
+  
+  // Notes
+  customerNote      String?
+  privateNote       String?  // Internal note
+  
+  // Link to production
+  productionOrderId String?
+  productionOrder   ProductionOrder? @relation(fields: [productionOrderId], references: [id])
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([workshopId])
+  @@index([customerId])
+}
+
+model EcommerceOrderItem {
+  id          String    @id @default(cuid())
+  orderId     String
+  order       EcommerceOrder @relation(fields: [orderId], references: [id])
+  
+  // Product snapshot
+  variantId   String?
+  variant     ProductVariant? @relation(fields: [variantId], references: [id])
+  productName String
+  variantName String?
+  
+  // Details
+  sku         String
+  quantity    Int
+  price       Float
+  attributes  Json?
+  
+  // Customization
+  customization Json?
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([orderId])
+}
+
+model Address {
+  id          String    @id @default(cuid())
+  customerId  String?
+  customer    EcommerceCustomer? @relation(fields: [customerId], references: [id])
+  
+  // Type
+  type        AddressType @default(SHIPPING)
+  label       String?     // "Home", "Office", etc.
+  
+  // Contact
+  firstName   String
+  lastName    String
+  company     String?
+  phone       String?
+  
+  // Address
+  street      String
+  street2     String?
+  city        String
+  state       String
+  postalCode  String
+  country     String    @default("Argentina")
+  
+  // Flags
+  isDefault   Boolean   @default(false)
+  notes       String?
+  
+  // Relations
+  shippingOrders EcommerceOrder[] @relation("EcomOrderShipping")
+  billingOrders  EcommerceOrder[] @relation("EcomOrderBilling")
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([customerId])
+}
+
+model ProductReview {
+  id          String    @id @default(cuid())
+  workshopId  String
+  workshop    Workshop  @relation(fields: [workshopId], references: [id])
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id])
+  customerId  String
+  customer    EcommerceCustomer @relation(fields: [customerId], references: [id])
+  
+  // Rating
+  rating      Int       @default(5) // 1-5 stars
+  title       String?
+  comment     String
+  
+  // Photos
+  photos      String[]
+  
+  // Moderation
+  status      ReviewStatus @default(PENDING)
+  moderatedBy String?
+  moderatedAt DateTime?
+  moderationNote String?
+  
+  // Seller reply
+  sellerReply String?
+  repliedAt   DateTime?
+  
+  // Helpful
+  helpfulCount Int      @default(0)
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@unique([customerId, productId])
+  @@index([productId])
+}
+
+model Coupon {
+  code        String    @id @unique
+  workshopId  String
+  workshop    Workshop  @relation(fields: [workshopId], references: [id])
+  
+  // Config
+  name        String
+  description String?
+  discountType DiscountType @default(PERCENTAGE)
+  discountValue Float
+  minimumPurchase Float?
+  maximumDiscount Float?
+  
+  // Limits
+  usageLimit  Int?
+  usedCount   Int       @default(0)
+  perUserLimit Int?
+  
+  // Dates
+  validFrom   DateTime?
+  validUntil  DateTime?
+  
+  // Applicability
+  appliesTo   CouponApplies @default(ALL_PRODUCTS)
+  productIds  String[]
+  categoryIds String[]
+  
+  // Status
+  isActive    Boolean   @default(true)
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  carts       Cart[]
+  orders      EcommerceOrder[]
+  
+  @@index([workshopId])
+}
+
+model ShippingMethod {
+  id          String    @id @default(cuid())
+  workshopId  String
+  workshop    Workshop  @relation(fields: [workshopId], references: [id])
+  storeId     String
+  store       EcommerceStore @relation(fields: [storeId], references: [id])
+  
+  name        String
+  description String?
+  
+  // Cost calculation
+  calculator  ShippingCalculator @default(FLAT_RATE)
+  basePrice   Float
+  perItemPrice Float?
+  freeShippingThreshold Float?
+  
+  // Shipping zones
+  countries   String[]  @default(["AR"])
+  states      String[]
+  
+  // Delivery time
+  estimatedDaysMin Int  @default(3)
+  estimatedDaysMax Int  @default(7)
+  
+  isActive    Boolean   @default(true)
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([storeId])
+}
+
+model PaymentMethod {
+  id          String    @id @default(cuid())
+  workshopId  String
+  workshop    Workshop  @relation(fields: [workshopId], references: [id])
+  storeId     String
+  store       EcommerceStore @relation(fields: [storeId], references: [id])
+  
+  // Config
+  provider    PaymentProvider
+  name        String
+  description String?
+  
+  // Provider config
+  config      Json      // API keys, etc.
+  
+  // Status
+  isActive    Boolean   @default(true)
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([storeId])
+}
+
+model EcommerceCategory {
+  id          String    @id @default(cuid())
+  workshopId  String
+  workshop    Workshop  @relation(fields: [workshopId], references: [id])
+  
+  name        String
+  slug        String    
+  description String?
+  parentId    String?
+  parent      EcommerceCategory? @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    EcommerceCategory[] @relation("CategoryHierarchy")
+  
+  // Image
+  imageUrl    String?
+  
+  // SEO
+  metaTitle   String?
+  metaDescription String?
+  
+  // Order
+  sortOrder   Int       @default(0)
+  
+  // Products
+  products    Product[]
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@unique([workshopId, slug])
+  @@index([workshopId])
+}
+
+// ============================================
+// ECOMMERCE ENUMS
+// ============================================
+
+enum StoreStatus {
+  DRAFT
+  ACTIVE
+  MAINTENANCE
+  SUSPENDED
+}
+
+enum EcomCustomerStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum AddressType {
+  SHIPPING
+  BILLING
+  BOTH
+}
+
+enum EcomOrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  IN_PRODUCTION
+  READY_FOR_SHIPPING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum EcomPaymentStatus {
+  PENDING
+  AUTHORIZED
+  PAID
+  PARTIALLY_REFUNDED
+  REFUNDED
+  CANCELLED
+  FAILED
+}
+
+enum PaymentProvider {
+  STRIPE
+  PAYPAL
+  MERCADOPAGO
+  BANK_TRANSFER
+  CASH
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+  FREE_SHIPPING
+}
+
+enum CouponApplies {
+  ALL_PRODUCTS
+  SPECIFIC_PRODUCTS
+  SPECIFIC_CATEGORIES
+}
+
+enum ShippingCalculator {
+  FLAT_RATE
+  PER_ITEM
+  WEIGHT_BASED
+  PRICE_BASED
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum SocialProvider {
+  GOOGLE
+  FACEBOOK
+  INSTAGRAM
+  APPLE
 }

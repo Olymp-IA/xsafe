@@ -1,0 +1,82 @@
+.wheel-container {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 85vh;
+  height: 85vh;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.wheel-container:active {
+  cursor: grabbing;
+}
+
+.wheel-inner {
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.wheel-svg {
+  width: 100%;
+  height: 100%;
+  /* No more continuous filter transition to improve performance */
+  /* filter: drop-shadow(...) handled inline */
+}
+
+/* Hover: subtle interaction, no glow */
+/* No filter change on hover for industrial look */
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+  .wheel-container {
+    width: 75vh;
+    height: 75vh;
+  }
+}
+
+@media (max-width: 1024px) {
+  .wheel-container {
+    width: 65vh;
+    height: 65vh;
+    /* On tablet, maybe show a bit less? */
+    transform: translate(45%, -50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .wheel-container {
+    width: 55vh;
+    height: 55vh;
+    /* Mobile: Bottom right or center? Request didn't specify mobile, assuming keep right anchor */
+    right: -10%;
+    top: 60%;
+    transform: translate(20%, -50%);
+  }
+}
+
+.wheel-option {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: 'Unbounded', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: color 0.3s ease;
+  will-change: transform, opacity;
+  /* Ensure text is centered vertically on its radial line */
+  display: flex;
+  align-items: center;
+}
+
+.wheel-option.active {
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}

@@ -1,0 +1,123 @@
+.category-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50vw;
+    /* Occupy left half */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 8vw;
+    z-index: 20;
+}
+
+.category-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    max-width: 600px;
+}
+
+.mono-index {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: #666;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.current {
+    color: #fff;
+    font-weight: 600;
+}
+
+.industrial-title {
+    font-size: 5rem;
+    font-weight: 600;
+    line-height: 0.9;
+    text-transform: uppercase;
+    margin: 0;
+    letter-spacing: -0.03em;
+}
+
+.industrial-desc {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: #888;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0;
+}
+
+.specs-row {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.8rem;
+    color: #555;
+    text-transform: uppercase;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.industrial-cta {
+    background: transparent;
+    border: 1px solid currentColor;
+    padding: 1rem 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.industrial-cta:hover {
+    background: rgba(255, 255, 255, 0.05);
+    padding-right: 2.5rem;
+}
+
+.nav-controls {
+    position: absolute;
+    bottom: 8vh;
+    left: 8vw;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: #666;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.nav-btn:hover {
+    color: #fff;
+}
+
+.nav-line {
+    width: 40px;
+    height: 1px;
+    background-color: #333;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .category-panel {
+        width: 60vw;
+        padding-left: 5vw;
+    }
+
+    .industrial-title {
+        font-size: 3.5rem;
+    }
+}

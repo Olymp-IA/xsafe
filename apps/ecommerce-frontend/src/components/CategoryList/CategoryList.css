@@ -1,0 +1,46 @@
+.category-list-container {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    /* Positioned mainly to the right of the wheel (which is at -50% + width) */
+    transform: translateY(-50%);
+    z-index: 15;
+    pointer-events: auto;
+}
+
+.category-list-track {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.category-list-item {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #ffffff;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+
+    /* Improve readability against dark background */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.category-list-item.active {
+    color: var(--tm-primary, #ffffff);
+    /* Will need to ensure dynamic color inheritance or set via inline style if needed */
+    font-weight: 700;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .category-list-container {
+        left: 25%;
+    }
+
+    .category-list-item {
+        font-size: 1.2rem;
+    }
+}

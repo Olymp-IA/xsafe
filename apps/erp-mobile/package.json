@@ -1,0 +1,52 @@
+{
+  "name": "xSafe-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "build:android": "cd android && ./gradlew assembleRelease",
+    "build:ios": "cd ios && xcodebuild -workspace ios/xSafe.xcworkspace -scheme xSafe -configuration Release",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-native": "0.72.0",
+    "@react-navigation/native": "^6.1.0",
+    "@react-navigation/bottom-tabs": "^6.5.0",
+    "@react-navigation/stack": "^6.3.0",
+    "@tanstack/react-query": "^5.0.0",
+    "zustand": "^4.0.0",
+    "axios": "^1.0.0",
+    "react-native-sqlite-storage": "^6.0.0",
+    "@react-native-async-storage/async-storage": "^1.18.0",
+    "react-native-vector-icons": "^10.0.0",
+    "react-native-gesture-handler": "^2.0.0",
+    "react-native-reanimated": "^3.0.0",
+    "react-native-screens": "^3.0.0",
+    "react-native-safe-area-context": "^4.0.0",
+    "react-native-qrcode-scanner": "^1.5.0",
+    "react-native-camera": "^4.2.0",
+    "react-native-image-picker": "^5.0.0",
+    "react-native-document-picker": "^9.0.0",
+    "react-native-push-notification": "^8.1.0",
+    "react-native-localize": "^3.0.0",
+    "react-native-netinfo": "^9.0.0",
+    "react-native-blob-util": "^0.19.0",
+    "react-native-chart-kit": "^6.0.0",
+    "react-native-svg": "^13.0.0",
+    "react-native-pager-view": "^6.0.0",
+    "react-native-gifted-charts": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-native": "0.72.0",
+    "typescript": "^5.0.0",
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/preset-typescript": "^7.18.0",
+    "metro-react-native-babel-preset": "^0.76.0"
+  }
+}

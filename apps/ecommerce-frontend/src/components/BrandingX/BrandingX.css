@@ -1,0 +1,66 @@
+.branding-x-container {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    /* Aligned to right edge, no cutoff */
+    left: auto;
+    /* Reset left */
+    transform: translateY(-50%);
+    width: 70vh;
+    /* Slightly smaller to fit vertical height */
+    height: 70vh;
+    z-index: 1;
+    /* Behind content but visible */
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0.8;
+}
+
+.branding-x-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* Subtle pulsing animation */
+.branding-x-container::after {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    border-radius: 50%;
+    background: radial-gradient(circle, currentColor 0%, transparent 70%);
+    opacity: 0.03;
+    animation: xPulse 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes xPulse {
+
+    0%,
+    100% {
+        transform: scale(0.9);
+        opacity: 0.02;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.05;
+    }
+}
+
+@media (max-width: 1024px) {
+    .branding-x-container {
+        width: 40vw;
+        height: 40vw;
+        left: 5%;
+    }
+}
+
+@media (max-width: 768px) {
+    .branding-x-container {
+        width: 50vw;
+        height: 50vw;
+        left: 3%;
+        top: 25%;
+    }
+}

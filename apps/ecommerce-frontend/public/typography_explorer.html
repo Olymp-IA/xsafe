@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSafe ERP - Stratosphere Typography</title>
+
+    <!-- Google Fonts - Stratosphere Pairing -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800&family=Instrument+Sans:wght@400;500;600&family=Cinzel:wght@700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* Colors (Titanium Monolith Base) */
+            --bg-color: #0E0E0E;
+            --panel-bg: #161616;
+            --border-color: #2A2A2A;
+            --text-main: #E0E0E0;
+            --text-muted: #888888;
+            --accent-color: #D4D4D4;
+
+            /* Stratosphere Typography */
+            --font-headers: 'Unbounded', sans-serif;
+            --font-body: 'Instrument Sans', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* Hero Section */
+        .hero-text {
+            margin-bottom: 80px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 50px;
+        }
+
+        h1 {
+            font-family: var(--font-headers);
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin: 0 0 24px 0;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .font-info {
+            font-size: 0.85rem;
+            margin-top: 16px;
+            display: block;
+            opacity: 0.5;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        /* UI Grid */
+        .ui-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        @media (max-width: 968px) {
+            .ui-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card Component */
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            border-radius: 8px;
+            transition: border-color 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: #3a3a3a;
+        }
+
+        .card-header {
+            font-family: var(--font-headers);
+            font-size: 1.25rem;
+            margin-bottom: 24px;
+            color: var(--text-main);
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            background: #252525;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        /* Product Card Specific */
+        .product-img {
+            background: #222;
+            height: 180px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444;
+            font-family: var(--font-headers);
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            border-radius: 4px;
+        }
+
+        .product-description {
+            color: #888;
+            margin-bottom: 24px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+        }
+
+        .price {
+            font-family: var(--font-headers);
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            letter-spacing: -0.01em;
+        }
+
+        /* Button */
+        .btn {
+            background: var(--text-main);
+            color: var(--bg-color);
+            border: none;
+            padding: 14px 28px;
+            font-family: var(--font-headers);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #fff;
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            color: var(--text-muted);
+            font-family: var(--font-headers);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+        }
+
+        .data-table td {
+            padding: 18px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .order-id {
+            font-family: var(--font-headers);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .status {
+            font-weight: 500;
+        }
+
+        .status-dispatched {
+            color: #2E8B57;
+        }
+
+        .status-pending {
+            color: #DAA520;
+        }
+
+        .status-processing {
+            color: #888;
+        }
+
+        /* Additional Info Section */
+        .info-section {
+            margin-bottom: 60px;
+        }
+
+        .info-section h2 {
+            font-family: var(--font-headers);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+
+        .info-section p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 800px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: var(--font-headers);
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .olympia-footer {
+            margin-top: 80px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2));
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .branding {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 0.08em;
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 40%, #FFE066 60%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .powered-by {
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 600;
+        }
+
+        .footer-note {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #555;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .footer-note strong {
+            font-family: var(--font-headers);
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-text">
+            <h1>XSAFE PROTOCOL</h1>
+            <div class="subtitle">
+                Precision inventory management for high-performance automotive parts.
+                <span class="font-info">TYPOGRAPHY: Stratosphere — Unbounded + Instrument Sans</span>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">247</div>
+                <div class="stat-label">Active Parts</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">89%</div>
+                <div class="stat-label">Fill Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">34</div>
+                <div class="stat-label">Orders Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">$42K</div>
+                <div class="stat-label">Revenue MTD</div>
+            </div>
+        </div>
+
+        <!-- Main UI Grid -->
+        <div class="ui-grid">
+            <!-- Product Card -->
+            <div class="card">
+                <div class="product-img">PRODUCT IMG</div>
+                <div class="card-header">
+                    Titanium Exhaust
+                    <span class="badge">Stock: 4</span>
+                </div>
+                <p class="product-description">
+                    High-grade aerospace titanium alloy. Decreases weight by 45% compared to stock components. Engineered for maximum performance.
+                </p>
+                <div class="product-footer">
+                    <span class="price">$1,299</span>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="card">
+                <div class="card-header">
+                    Recent Orders
+                    <span class="badge">Live</span>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Client</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="order-id">#XS-9921</td>
+                            <td>MotorWerks LLC</td>
+                            <td class="status status-dispatched">Dispatched</td>
+                            <td class="price">$4,250</td>
+                        </tr>
+                        <tr>
+                            <td class="order-id">#XS-9922</td>
+                            <td>SpeedShop IO</td>
+                            <td class="status status-pending">Pending</td>
+                            <td class="price">$890</td>
+                        </tr>
+                        <tr>
+                            <td class="order-id">#XS-9923</td>
+                            <td>Private Client</td>
+                            <td class="status status-processing">Processing</td>
+                            <td class="price">$12,400</td>
+                        </tr>
+                        <tr>
+                            <td class="order-id">#XS-9924</td>
+                            <td>Apex Racing</td>
+                            <td class="status status-dispatched">Dispatched</td>
+                            <td class="price">$2,180</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <h2>Performance Metrics</h2>
+            <p>
+                Our inventory management system tracks real-time stock levels, order fulfillment rates, and revenue metrics across all product categories. The Stratosphere typography system combines the geometric precision of Unbounded with the readability of Instrument Sans, creating a distinctive yet professional interface.
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="olympia-footer">
+        <div class="branding">
+            <span class="powered-by">powered by</span>
+            <span class="logo">OLYMP Îž IA.cl</span>
+        </div>
+        <p class="footer-note">
+            <strong>Stratosphere</strong> typography system featuring Unbounded for headers and Instrument Sans for body text. A modern, geometric pairing with distinctive character.
+        </p>
+    </footer>
+
+</body>
+
+</html>

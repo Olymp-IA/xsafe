@@ -1,0 +1,36 @@
+# Development dependencies and build files
+node_modules
+npm-debug.log
+dist
+
+# Source maps
+*.map
+
+# Test files
+*.spec.ts
+*.test.ts
+coverage/
+test/
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Environment files (use Docker secrets or env vars)
+.env
+.env.*
+!.env.example
+
+# Documentation
+*.md
+!README.md
+
+# Misc
+.DS_Store
+Thumbs.db

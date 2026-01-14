@@ -1,0 +1,109 @@
+/* Titanium Monolith UI Kit Styles */
+
+:root {
+    --tm-bg: #0E0E0E;
+    --tm-panel: #161616;
+    --tm-border: #2A2A2A;
+    --tm-text: #E0E0E0;
+    --tm-accent: #D4D4D4;
+    --tm-success: #2E8B57;
+    --tm-warning: #DAA520;
+}
+
+/* Typography */
+.tm-font-mono {
+    font-family: var(--font-mono);
+}
+
+.tm-font-brand {
+    font-family: var(--font-body);
+}
+
+/* Buttons */
+.tm-btn {
+    background: transparent;
+    border: 1px solid var(--tm-accent);
+    color: var(--tm-text);
+    padding: 12px 24px;
+    font-family: var(--font-headers);
+    /* Stratosphere: Use Display font for buttons */
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 0;
+    /* Industrial sharp edges */
+}
+
+.tm-btn:hover {
+    background: var(--tm-accent);
+    color: var(--tm-bg);
+}
+
+.tm-btn-primary {
+    background: var(--tm-text);
+    color: var(--tm-bg);
+    border: 1px solid var(--tm-text);
+    font-weight: 700;
+}
+
+.tm-btn-primary:hover {
+    background: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+/* Inputs */
+.tm-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.tm-label {
+    font-size: 0.75rem;
+    color: #888;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tm-input {
+    background: var(--tm-panel);
+    border: 1px solid var(--tm-border);
+    padding: 12px;
+    color: var(--tm-text);
+    font-family: 'JetBrains Mono', monospace;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.tm-input:focus {
+    border-color: var(--tm-accent);
+}
+
+/* Cards */
+.tm-card {
+    background: var(--tm-panel);
+    border: 1px solid var(--tm-border);
+    padding: 24px;
+    position: relative;
+}
+
+.tm-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--tm-border);
+    transition: background 0.2s;
+}
+
+.tm-card:hover::before {
+    background: var(--tm-accent);
+}

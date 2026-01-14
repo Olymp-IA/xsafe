@@ -1,0 +1,57 @@
+appId: com.xsafe.erp
+productName: xSafe ERP
+directories:
+  output: dist
+  buildResources: build/resources
+files:
+  - 'dist/**/*'
+  - 'build/**/*'
+  - 'node_modules/**/*'
+  - 'package.json'
+extraResources:
+  - from: 'build/icons'
+    to: 'icons'
+    filter:
+      - '*.png'
+      - '*.ico'
+      - '*.icns'
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+  icon: 'build/icons/icon.ico'
+  publisherName: xSafe
+  verifyUpdateCodeSignature: false
+nsis:
+  oneClick: false
+  perMachine: true
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: xSafe ERP
+mac:
+  target: dmg
+  icon: 'build/icons/icon.icns'
+  category: public.app-category.business
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: 'build/entitlements.mac.plist'
+  entitlementsInherit: 'build/entitlements.mac.plist'
+dmg:
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+linux:
+  target:
+    - AppImage
+    - deb
+  icon: 'build/icons'
+  category: Office
+appImage:
+  systemIntegration: ask

@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+/* Global Industrial Reset - Stratosphere Typography */
+
+:root {
+  /* Stratosphere Configuration */
+  --font-headers: 'Unbounded', sans-serif;
+  --font-body: 'Instrument Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  font-family: var(--font-body);
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: #E0E0E0;
+  background-color: #111111;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Scene handles scroll */
+  width: 100vw;
+  min-height: 100vh;
+}
+
+/* Scrollbar hidden (App-like feel) */
+/* Scrollbar Styling (Industrial) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF4D4D;
+}
+
+/* Typography Overrides */
+h1,
+h2,
+h3,
+h4,
+button {
+  font-family: var(--font-headers);
+  letter-spacing: -0.02em;
+}
+
+/* Monospace for technical details */
+.mono {
+  font-family: var(--font-mono);
+}
