@@ -25,18 +25,18 @@ El siguiente diagrama ilustra la interacción entre los diferentes dominios de l
 
 ```mermaid
 graph TB
-    User((Usuario/Cliente))
-    Admin((Admin/Gerente))
-    Operator((Operario))
+    User(("Usuario/Cliente"))
+    Admin(("Admin/Gerente"))
+    Operator(("Operario"))
     
     subgraph "Ecosistema XSafe"
-        Store[Tienda E-commerce\n(Next.js)]
-        WebAdmin[Panel Web\n(Next.js)]
-        ERP_API[API Core ERP\n(NestJS)]
-        Mobile[App Móvil\n(React Native)]
-        Desktop[App Escritorio\n(Electron)]
-        DB[(PostgreSQL)]
-        Redis[(Redis Caché)]
+        Store["Tienda E-commerce<br>(Next.js)"]
+        WebAdmin["Panel Web<br>(Next.js)"]
+        ERP_API["API Core ERP<br>(NestJS)"]
+        Mobile["App Móvil<br>(React Native)"]
+        Desktop["App Escritorio<br>(Electron)"]
+        DB[("(PostgreSQL)")]
+        Redis[("(Redis Caché)")]
     end
     
     User -->|Compra| Store
