@@ -8,29 +8,32 @@ La plataforma XSafe está compuesta por 5 dominios de negocio principales intera
 
 ```mermaid
 graph TB
-    User((Usuario/Cliente))
-    Admin((Admin/Gerente))
-    Operator((Operario))
+    User(("Usuario/Cliente"))
+    Admin(("Admin/Gerente"))
+    Operator(("Operario"))
     
     subgraph "Ecosistema XSafe"
-        Store[Tienda E-commerce\n(Next.js)]
-        WebAdmin[Panel Web\n(Next.js)]
-        ERP_API[API Core ERP\n(NestJS)]
-        Mobile[App Móvil\n(React Native)]
-        Desktop[App Escritorio\n(Electron)]
-        DB[(PostgreSQL)]
-        Redis[(Redis Caché)]
+        Store["Tienda E-commerce<br>(Next.js)"]
+        WebAdmin["Panel Web<br>(Next.js)"]
+        ERP_API["API Core ERP<br>(NestJS)"]
+        Mobile["App Móvil<br>(React Native)"]
+        Desktop["App Escritorio<br>(Electron)"]
+        Monitor["Monitor Taller<br>(React + Vite)"]
+        DB[("(PostgreSQL)")]
+        Redis[("(Redis Caché)")]
     end
     
     User --> Store
     Admin --> WebAdmin
     Operator --> Mobile
     Operator --> Desktop
+    Operator --> Monitor
     
     Store --> ERP_API
     WebAdmin --> ERP_API
     Mobile --> ERP_API
     Desktop --> ERP_API
+    Monitor --> ERP_API
     
     ERP_API --> DB
     ERP_API --> Redis
@@ -59,6 +62,14 @@ graph TB
 *   **Persistencia**: Base de datos SQLite local vía TypeORM.
 *   **IPC**: Comunicación segura Principal-Renderizador para capacidades nativas (Sistema de Archivos, Hardware).
 
+### Monitor de Taller (Planta)
+*   **Framework**: React + Vite (SPA ligera).
+*   **Visualización**: Interfaz de alto contraste para pantallas de gran formato.
+*   **Tiempo Real**: Conexión Socket.io para actualización inmediata de KPIs y alertas.
+
+### Librerías Compartidas
+*   **UI Kit**: Paquete interno (`@xsafe/ui-kit`) que exporta componentes base y configuración de tema para mantener consistencia visual entre Web, Desktop y Monitor.
+
 ### Backend (Microservicios)
 *   **Framework**: NestJS con arquitectura modular estricta.
 *   **Comunicación**: API REST para llamadas de sincronización, Emisor de Eventos para tareas internas asíncronas.
@@ -82,11 +93,12 @@ graph TB
 ```
 xSafe-ERP/
 ├── apps/
-│   ├── backend-api/        # Lógica Core
+│   ├── core-backend/       # Lógica Core (NestJS)
 │   ├── ecommerce-frontend/ # Tienda Next.js
 │   ├── erp-web/            # Panel Admin Next.js
 │   ├── erp-desktop/        # App Escritorio Electron
-│   └── erp-mobile/         # App Móvil React Native
+│   ├── erp-mobile/         # App Móvil React Native
+│   └── workshop-monitor/   # Monitor de Taller React
 ├── packages/               # Librerías Compartidas
 │   ├── ui-kit/
 │   └── types/

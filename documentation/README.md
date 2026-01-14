@@ -27,6 +27,7 @@ Construido con un enfoque en **escalabilidad**, **seguridad** y **confiabilidad*
 *   **Gestión de Estado**: Zustand, React Query
 *   **Móvil**: React Native 0.72, TypeScript, SQLite (Modo Offline)
 *   **Escritorio**: Electron 25, React, SQLite (Offline-First)
+*   **Monitor (Taller)**: React + Vite, Recharts, Socket.io (Visualización Planta)
 
 ### Servicios Backend
 *   **API Gateway**: NestJS, Fastify
@@ -100,9 +101,6 @@ Para información detallada, por favor consulte nuestra suite de documentación 
 
 ## Soporte y Licencia
 
-**Licencia**: MIT
-**Soporte**: contact@xsafe.com
-**Emergencias**: +1 800 XSAFE 99 (Soporte de Producción 24/7)
 
 ---
 *Powered by OLYMP-IA Enterprise Solutions*
