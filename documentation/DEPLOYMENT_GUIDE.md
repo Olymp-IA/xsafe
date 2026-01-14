@@ -45,6 +45,17 @@ URL: `https://xsafe-erp.com`
 ### App de Escritorio (Distribución)
 La app Electron se compila y publica en AWS S3 / GitHub Releases.
 
+### Monitor de Taller (Manual)
+Dado que corre en Smart TVs, a menudo se despliega via USB o servidor local.
+
+**Comando de Compilación:**
+```bash
+cd apps/workshop-monitor
+npm run build
+```
+Generará una carpeta `dist` estática que puede alojarse en cualquier servidor web simple (nginx, Apache) o servicio de hosting estático (Vercel, Netlify).
+
+
 **Comando de Compilación:**
 ```bash
 cd apps/erp-desktop

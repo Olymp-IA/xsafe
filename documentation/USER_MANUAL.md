@@ -30,6 +30,21 @@ Visión general en tiempo real del estado de producción.
 *   Use filtros para encontrar stock bajo.
 *   El botón "Reordenar" genera órdenes de compra automáticas para proveedores aprobados.
 
+## Para Supervisores de Planta (Monitor de Taller)
+
+### Visualización en Pantalla Grande
+La aplicación de Monitor está diseñada para ejecutarse en Smart TVs o pantallas industriales en el piso de producción.
+
+1.  **KPIs en Vivo**:
+    *   **OEE Global**: Eficiencia general de los equipos.
+    *   **Producción Actual**: Comparativa vs Objetivo horario.
+    *   **Tasa de Rechazo**: Porcentaje de piezas defectuosas.
+2.  **Estado de Maquinaria**:
+    *   Indicadores visuales (Verde/Amarillo/Rojo) del estado de cada celda de trabajo.
+3.  **Alertas**:
+    *   Notificaciones parpadeantes críticas (ej. "Parada de Línea") para atención inmediata.
+
+
 ## Para Clientes (Tienda E-commerce)
 
 ### Personalización de Producto

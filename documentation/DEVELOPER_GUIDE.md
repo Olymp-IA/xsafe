@@ -41,6 +41,11 @@ npm run dev
 # Iniciar App Móvil (Metro Bundler)
 cd apps/erp-mobile
 npm run start
+
+# Iniciar Monitor de Taller
+cd apps/workshop-monitor
+npm run dev
+
 ```
 
 ## Estructura del Proyecto
@@ -49,16 +54,18 @@ Seguimos una estructura Monorepo gestionada por npm workspaces / Nx.
 ```
 xsafe-erp/
 ├── apps/               # Código fuente de las aplicaciones
-│   ├── backend-api/    # API NestJS
+│   ├── core-backend/   # API NestJS
 │   ├── ecommerce-frontend/ # Tienda Next.js
 │   ├── erp-web/        # Panel Admin Next.js
 │   ├── erp-desktop/    # App Escritorio Electron
-│   └── erp-mobile/     # App Móvil React Native
+│   ├── erp-mobile/     # App Móvil React Native
+│   └── workshop-monitor/ # Monitor de Taller React
 ├── packages/           # Librerías compartidas
-│   ├── ui/             # Componentes del Sistema de Diseño
-│   └── database/       # Esquema Prisma y tipos
+│   ├── ui-kit/         # Componentes UI (React + Tailwind)
+│   └── types/          # Tipos compartidos
 ├── tools/              # Scripts de desarrollo y configuraciones
-└── docs/               # Documentación
+└── documentation/      # Documentación
+
 ```
 
 ## Estándares de Código
