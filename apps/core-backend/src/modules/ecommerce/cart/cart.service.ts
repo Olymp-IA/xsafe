@@ -27,7 +27,16 @@ export class CartService {
         if (!cart) {
             cart = await this.prisma.cart.create({
                 data: customerId ? { customerId } : { sessionId },
-                include: { items: { include: { variant: true } }, coupon: true },
+                include: {
+                    items: {
+                        include: {
+                            variant: {
+                                include: { product: { select: { name: true, slug: true } } },
+                            },
+                        },
+                    },
+                    coupon: true,
+                },
             });
         }
 

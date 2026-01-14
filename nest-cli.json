@@ -17,22 +17,6 @@
                 "tsConfigPath": "apps/core-backend/tsconfig.app.json"
             }
         },
-        "workshop-monitor": {
-            "type": "application",
-            "root": "apps/workshop-monitor",
-            "sourceRoot": "apps/workshop-monitor/src",
-            "compilerOptions": {
-                "tsConfigPath": "apps/workshop-monitor/tsconfig.app.json"
-            }
-        },
-        "admin-dashboard": {
-            "type": "application",
-            "root": "apps/admin-dashboard",
-            "sourceRoot": "apps/admin-dashboard/src",
-            "compilerOptions": {
-                "tsConfigPath": "apps/admin-dashboard/tsconfig.app.json"
-            }
-        },
         "shared-types": {
             "type": "library",
             "root": "packages/shared-types",
@@ -49,15 +33,6 @@
             "sourceRoot": "packages/business-logic/src",
             "compilerOptions": {
                 "tsConfigPath": "packages/business-logic/tsconfig.lib.json"
-            }
-        },
-        "ui-kit": {
-            "type": "library",
-            "root": "packages/ui-kit",
-            "entryFile": "index",
-            "sourceRoot": "packages/ui-kit/src",
-            "compilerOptions": {
-                "tsConfigPath": "packages/ui-kit/tsconfig.lib.json"
             }
         },
         "config": {

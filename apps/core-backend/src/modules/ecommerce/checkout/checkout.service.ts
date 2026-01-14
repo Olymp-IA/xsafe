@@ -60,7 +60,7 @@ export class CheckoutService {
                 orderNumber,
                 workshopId: firstVariant.product.workshopId,
                 customerId: cart.customerId,
-                customerEmail: cart.customer?.email || cart.guestEmail || '',
+                customerEmail: cart.guestEmail || '',
                 customerFirstName: checkoutData.shippingAddress.firstName,
                 customerLastName: checkoutData.shippingAddress.lastName,
                 customerPhone: checkoutData.shippingAddress.phone,
@@ -78,7 +78,7 @@ export class CheckoutService {
                 items: {
                     create: cart.items.map((item) => ({
                         variantId: item.variantId,
-                        productName: item.variant.product?.name || item.variant.name,
+                        productName: item.variant.name,
                         variantName: item.variant.name,
                         sku: item.variant.sku,
                         quantity: item.quantity,

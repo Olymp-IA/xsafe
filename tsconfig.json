@@ -43,5 +43,22 @@
                 "packages/config/src/*"
             ]
         }
-    }
+    },
+    "include": [
+        "apps/core-backend/src/**/*",
+        "packages/shared-types/src/**/*",
+        "packages/business-logic/src/**/*",
+        "packages/config/src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "apps/ecommerce-frontend",
+        "apps/erp-web",
+        "apps/erp-mobile",
+        "apps/erp-desktop",
+        "apps/workshop-monitor",
+        "apps/admin-dashboard",
+        "packages/ui-kit"
+    ]
 }
