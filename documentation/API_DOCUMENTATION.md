@@ -1,33 +1,33 @@
-# 🔌 REST API Documentation
+# Documentación API REST
 
-This document describes the REST API resources available in the XSafe ERP platform.
+Este documento describe los recursos de la API REST disponibles en la plataforma XSafe ERP.
 
-**Base URL**: `https://api.xsafe-erp.com/v1`
-**Version**: `1.0.0`
-**Spec Format**: OpenAPI 3.0
+**URL Base**: `https://api.xsafe-erp.com/v1`
+**Versión**: `1.0.0`
+**Formato de Especificación**: OpenAPI 3.0
 
-## Authentication
-All API requests must include a Bearer Token in the header.
+## Autenticación
+Todas las solicitudes a la API deben incluir un Token Bearer en el encabezado.
 
 ```http
-Authorization: Bearer <your_jwt_token>
+Authorization: Bearer <tu_token_jwt>
 ```
 
 ---
 
-## 🏭 Production Endpoints
+## Endpoints de Producción
 
-### 1. Get Production Orders
-Retrieve a list of production orders with optional filtering.
+### 1. Obtener Órdenes de Producción
+Recupera una lista de órdenes de producción con filtrado opcional.
 
 *   **URL**: `/production/orders`
-*   **Method**: `GET`
-*   **Query Params**:
-    *   `status` (optional): `PENDING`, `IN_PROGRESS`, `COMPLETED`
-    *   `limit` (optional): `number` (default 20)
-    *   `offset` (optional): `number` (default 0)
+*   **Método**: `GET`
+*   **Parámetros de Consulta**:
+    *   `status` (opcional): `PENDING`, `IN_PROGRESS`, `COMPLETED`
+    *   `limit` (opcional): `number` (predeterminado 20)
+    *   `offset` (opcional): `number` (predeterminado 0)
 
-**Response (200 OK):**
+**Respuesta (200 OK):**
 ```json
 {
   "data": [
@@ -35,7 +35,7 @@ Retrieve a list of production orders with optional filtering.
       "id": "ord_12345",
       "order_number": "ORD-001",
       "status": "IN_PROGRESS",
-      "customer_name": "John Doe",
+      "customer_name": "Juan Perez",
       "created_at": "2024-03-15T10:00:00Z"
     }
   ],
@@ -46,15 +46,15 @@ Retrieve a list of production orders with optional filtering.
 }
 ```
 
-### 2. Create Order
-Create a new production order.
+### 2. Crear Orden
+Crea una nueva orden de producción.
 
 *   **URL**: `/production/orders`
-*   **Method**: `POST`
-*   **Body**:
+*   **Método**: `POST`
+*   **Cuerpo**:
 ```json
 {
-  "customer_name": "Jane Smith",
+  "customer_name": "Maria Lopez",
   "motorcycle_model": "Yamaha R1",
   "product_type": "Crash Cage Pro",
   "priority": "HIGH",
@@ -64,24 +64,24 @@ Create a new production order.
 
 ---
 
-## 📦 Inventory Endpoints
+## Endpoints de Inventario
 
-### 1. Get Inventory Items
-List all inventory stock levels.
+### 1. Obtener Items de Inventario
+Lista todos los niveles de stock del inventario.
 
 *   **URL**: `/inventory`
-*   **Method**: `GET`
-*   **Query Params**:
-    *   `low_stock`: `boolean` (true to filter items below min quantity)
+*   **Método**: `GET`
+*   **Parámetros de Consulta**:
+    *   `low_stock`: `boolean` (true para filtrar items bajo cantidad mínima)
 
-**Response (200 OK):**
+**Respuesta (200 OK):**
 ```json
 {
   "data": [
     {
       "id": "inv_987",
-      "sku": "STEEL-PIPE-20MM",
-      "name": "Steel Pipe 20mm",
+      "sku": "TUBO-ACERO-20MM",
+      "name": "Tubo de Acero 20mm",
       "quantity": 150.5,
       "unit": "m",
       "min_quantity": 200.0
@@ -90,12 +90,12 @@ List all inventory stock levels.
 }
 ```
 
-### 2. Record Movement
-Record an inbound or outbound inventory movement.
+### 2. Registrar Movimiento
+Registra un movimiento de entrada o salida de inventario.
 
 *   **URL**: `/inventory/movements`
-*   **Method**: `POST`
-*   **Body**:
+*   **Método**: `POST`
+*   **Cuerpo**:
 ```json
 {
   "item_id": "inv_987",
@@ -108,22 +108,22 @@ Record an inbound or outbound inventory movement.
 
 ---
 
-## 🔐 Auth Endpoints
+## Endpoints de Autenticación
 
-### 1. Login
-Authenticate a user and retrieve a JWT.
+### 1. Iniciar Sesión
+Autentica a un usuario y recupera un JWT.
 
 *   **URL**: `/auth/login`
-*   **Method**: `POST`
-*   **Body**:
+*   **Método**: `POST`
+*   **Cuerpo**:
 ```json
 {
   "email": "admin@xsafe.com",
-  "password": "secure_password"
+  "password": "password_seguro"
 }
 ```
 
-**Response (200 OK):**
+**Respuesta (200 OK):**
 ```json
 {
   "access_token": "eyJhbGciOiJIUzI1Ni...",
@@ -137,11 +137,11 @@ Authenticate a user and retrieve a JWT.
 
 ---
 
-## Error Codes
-| Code | Meaning | Description |
+## Códigos de Error
+| Código | Significado | Descripción |
 | :--- | :--- | :--- |
-| `400` | Bad Request | Invalid input data |
-| `401` | Unauthorized | Missing or invalid token |
-| `403` | Forbidden | User lacks permissions |
-| `404` | Not Found | Resource does not exist |
-| `500` | Server Error | Internal system failure |
+| `400` | Petición Incorrecta | Datos de entrada inválidos |
+| `401` | No Autorizado | Token faltante o inválido |
+| `403` | Prohibido | El usuario carece de permisos |
+| `404` | No Encontrado | El recurso no existe |
+| `500` | Error del Servidor | Fallo interno del sistema |

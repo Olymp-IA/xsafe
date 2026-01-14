@@ -1,53 +1,64 @@
-# 🧪 Testing Strategy
+# Estrategia de Pruebas
 
-This document outlines the testing methodology to ensure the reliability and quality of the XSafe ERP platform.
+Este documento describe la metodología de pruebas para asegurar la confiabilidad y calidad de la plataforma XSafe ERP.
 
-## 🎯 Testing Pyramid
+## Pirámide de Pruebas
 
-We adhere to the standard testing pyramid:
+Nos adherimos a la pirámide de pruebas estándar:
 
-1.  **Unit Tests (70%)**: Fast, isolated tests for individual functions and classes.
-2.  **Integration Tests (20%)**: Testing interaction between modules (e.g., API + Database).
-3.  **E2E Tests (10%)**: Full system testing simulating user behavior.
+1.  **Pruebas Unitarias (70%)**: Pruebas rápidas y aisladas para funciones y clases individuales.
+2.  **Pruebas de Integración (20%)**: Prueba de la interacción entre módulos (ej. API + Base de Datos).
+3.  **Pruebas E2E (10%)**: Prueba completa del sistema simulando el comportamiento del usuario.
 
-## 🛠️ Tools & Frameworks
+## Herramientas y Frameworks
 
-| Type | Tool | Scope |
+| Tipo | Herramienta | Alcance |
 | :--- | :--- | :--- |
-| **Unit/Integration** | Jest | Backend, Logic Libraries, Desktop Main Process |
-| **Component** | React Testing Library | Frontend (Web/Desktop), Mobile Components |
-| **E2E (Web)** | Cypress | Critical user flows (Checkout, Login, Dashboard) |
-| **E2E (Mobile)** | Detox | React Native flows |
-| **E2E (Desktop)**| Playwright | Electron app verification |
-| **Load Testing** | k6 | Performance & Stress testing |
+| **Unitaria/Integración** | Jest | Backend, Librerías Lógicas, Proceso Principal Escritorio |
+| **Componente** | React Testing Library | Frontend (Web/Escritorio), Componentes Móviles |
+| **E2E (Web)** | Cypress | Flujos críticos de usuario (Pago, Login, Dashboard) |
+| **E2E (Móvil)** | Detox | Flujos React Native |
+| **E2E (Escritorio)**| Playwright | Verificación app Electron |
+| **Carga** | k6 | Pruebas de Rendimiento y Estrés |
 
-## 📋 Test Plan
+## Plan de Pruebas
 
 ### Backend (NestJS)
-*   **Controllers**: Verify input validation and response shaping.
-*   **Services**: Verify business logic and edge cases.
-*   **Guards**: Verify authentication and role permissions.
+*   **Controladores**: Verificar validación de entrada y forma de respuesta.
+*   **Servicios**: Verificar lógica de negocio y casos borde.
+*   **Guardias**: Verificar autenticación y permisos de roles.
 
-### Frontend (Next.js - Store & Admin)
-*   **Snapshots**: Verify UI rendering consistency.
-*   **Interactions**: Verify button clicks, form submissions, and state updates.
-*   **Accessibility**: Verify A11y compliance (ARIA labels, contrast).
+### Frontend (Next.js - Tienda y Admin)
+*   **Snapshots**: Verificar consistencia de renderizado UI.
+*   **Interacciones**: Verificar clics en botones, envíos de formularios y actualizaciones de estado.
+*   **Accesibilidad**: Verificar cumplimiento A11y (etiquetas ARIA, contraste).
 
-### Mobile App (React Native)
-*   **Offline Sync**: Verify data persistence and synchronization queue.
-*   **Hardware**: Verify Camera/Scanner integration mocks.
+### App Móvil (React Native)
+*   **Sincronización Offline**: Verificar persistencia de datos y cola de sincronización.
+*   **Hardware**: Verificar mocks de integración de Cámara/Escáner.
 
-### Desktop App (Electron)
-*   **IPC**: Verify reliable communication between Main and Renderer processes.
-*   **Native Features**: Verify File System access and Auto-updater triggers.
+### App de Escritorio (Electron)
+*   **IPC**: Verificar comunicación confiable entre procesos Principal y Renderizador.
+*   **Características Nativas**: Verificar acceso al Sistema de Archivos y disparadores de Auto-actualización.
 
-## 🔄 CI/CD Gates
-The build pipeline will fail if:
-*   Unit tests pass rate < 100%.
-*   Code coverage drops below 80%.
-*   E2E critical smoke tests fail.
+## Puertas de Calidad CI/CD
+El pipeline de construcción fallará si:
+*   La tasa de aprobación de pruebas unitarias es < 100%.
+*   La cobertura de código cae por debajo del 80%.
+*   Las pruebas de humo críticas E2E fallan.
 
-## 📊 Coverage Targets
-*   **Business Logic**: 90%+
-*   **Utilities/Helpers**: 100%
-*   **UI Components**: 70%
+## Objetivos de Cobertura
+*   **Lógica de Negocio**: 90%+
+*   **Utilidades/Helpers**: 100%
+*   **Componentes UI**: 70%
+
+## Escribiendo Pruebas
+Ejemplo de Prueba Unitaria (Jest):
+```typescript
+describe('OrderService', () => {
+  it('debería calcular el precio total correctamente', () => {
+    const order = { items: [{ price: 10, qty: 2 }] };
+    expect(calculateTotal(order)).toBe(20);
+  });
+});
+```

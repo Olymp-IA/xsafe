@@ -1,54 +1,21 @@
-# 🛠️ Maintenance Plan
+# Guía de Mantenimiento
 
-This document defines the maintenance schedule, SLAs (Service Level Agreements), and support procedures for the XSafe ERP platform.
+Procedimientos para mantener la salud y el rendimiento de la plataforma XSafe ERP.
 
-## 📅 Maintenance Schedule
+## Tareas Diarias
+*   Verificar los paneles de control de fallos en Sentry.
+*   Revisar las alertas de uso de CPU/Memoria en AWS CloudWatch.
 
-### Routine Maintenance
-*   **Weekly**: Database backups verification, log rotation.
-*   **Monthly**: Security patches (OS & Dependencies), performance review.
-*   **Quarterly**: Major version upgrades, disaster recovery drills.
+## Tareas Semanales
+*   **Rotación de Logs**: Archivar logs antiguos a S3 Glacier.
+*   **Actualizaciones de Seguridad**: Aplicar parches de seguridad del sistema operativo y dependencias npm críticas (`npm audit`).
 
-### Maintenance Windows
-*   **Scheduled Downtime**: Sunday 02:00 AM - 04:00 AM (UTC).
-*   **Notification**: Users notified 48 hours in advance via Dashboard banner and Email.
+## Tareas Mensuales
+*   **Optimización de Base de Datos**: Ejecutar `VACUUM ANALYZE` en PostgreSQL.
+*   **Auditoría de Accesos**: Revisar lista de usuarios con permisos de admin.
 
-## 🤝 Service Level Agreements (SLA)
+## Procedimientos de Backup
+*   **Base de Datos**: Snapshots automáticos diarios de RDS (retención de 30 días).
+*   **Código**: Repositorio GitHub distribuido.
 
-| Priority | Response Time | Resolution Time | Uptime Guarantee |
-| :--- | :--- | :--- | :--- |
-| **Critical (P0)** | 15 mins | 4 hours | 99.99% |
-| **High (P1)** | 1 hour | 8 hours | 99.9% |
-| **Medium (P2)** | 4 hours | 2 days | 99.5% |
-| **Low (P3)** | 24 hours | 5 days | N/A |
-
-### Definitions
-*   **Critical**: System down, data loss, or blocking production.
-*   **High**: Core feature broken, workaround available.
-*   **Medium**: Minor bug, non-blocking.
-*   **Low**: Cosmetic issue, feature request.
-
-## 📞 Support Structure
-
-### Tier 1 (Helpdesk)
-*   **Scope**: Password resets, basic usage questions, troubleshooting.
-*   **Contact**: `support@xsafe.com`
-
-### Tier 2 (Dev Team)
-*   **Scope**: Bug fixes, data inconsistencies, configuration changes.
-*   **Escalation**: Via Jira Ticket assigned by Tier 1.
-
-### Tier 3 (SRE / Architects)
-*   **Scope**: Infrastructure failures, critical security incidents.
-*   **On-Call**: PagerDuty rotation.
-
-## 🔄 Backup & Recovery
-
-### Backup Policy
-*   **Database**: Full daily backup (kept for 30 days), WAL logs every 5 mins (PITR).
-*   **Files (S3)**: Versioning enabled, cross-region replication for DR.
-
-### Disaster Recovery (DR)
-*   **RTO (Recovery Time Objective)**: 1 hour.
-*   **RPO (Recovery Point Objective)**: 5 minutes.
-*   **Procedure**: Trigger automated failover to standby region (e.g., us-east-1 -> us-west-2).
+En caso de corrupción de datos, referirse al documento de Plan de Recuperación de Desastres.

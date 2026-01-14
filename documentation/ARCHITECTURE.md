@@ -1,25 +1,25 @@
-# 🏗️ System Architecture
+# Arquitectura del Sistema
 
-This document details the technical architecture of the XSafe ERP platform, adhering to the C4 model for software architecture documentation.
+Este documento detalla la arquitectura técnica de la plataforma XSafe ERP, adhiriéndose al modelo C4 para la documentación de arquitectura de software.
 
-## 1. High-Level Architecture (Context)
+## 1. Arquitectura de Alto Nivel (Contexto)
 
-The XSafe platform is composed of 5 main business domains interacting within a distributed system.
+La plataforma XSafe está compuesta por 5 dominios de negocio principales interactuando dentro de un sistema distribuido.
 
 ```mermaid
 graph TB
-    User((User/Customer))
-    Admin((Admin/Manager))
-    Operator((Operator))
+    User((Usuario/Cliente))
+    Admin((Admin/Gerente))
+    Operator((Operario))
     
-    subgraph "XSafe Ecosystem"
-        Store[E-commerce Store\n(Next.js)]
-        WebAdmin[Web Dashboard\n(Next.js)]
-        ERP_API[ERP Core API\n(NestJS)]
-        Mobile[Mobile App\n(React Native)]
-        Desktop[Desktop App\n(Electron)]
+    subgraph "Ecosistema XSafe"
+        Store[Tienda E-commerce\n(Next.js)]
+        WebAdmin[Panel Web\n(Next.js)]
+        ERP_API[API Core ERP\n(NestJS)]
+        Mobile[App Móvil\n(React Native)]
+        Desktop[App Escritorio\n(Electron)]
         DB[(PostgreSQL)]
-        Redis[(Redis Cache)]
+        Redis[(Redis Caché)]
     end
     
     User --> Store
@@ -36,57 +36,59 @@ graph TB
     ERP_API --> Redis
 ```
 
-## 2. Component Design
+## 2. Diseño de Componentes
 
 ### Frontend (E-commerce)
 *   **Framework**: Next.js (App Router)
-*   **Rendering**: Server-Side Rendering (SSR) for SEO, Client-Side Rendering (CSR) for interactive 3D elements.
-*   **Styling**: Tailwind CSS + CSS Modules for component isolation.
-*   **Performance**: Image optimization, dynamic imports for heavy 3D assets.
+*   **Renderizado**: Server-Side Rendering (SSR) para SEO, Client-Side Rendering (CSR) para elementos 3D interactivos.
+*   **Estilos**: Tailwind CSS + Módulos CSS para aislamiento de componentes.
+*   **Rendimiento**: Optimización de imágenes, importaciones dinámicas para activos 3D pesados.
 
-### Web Admin (ERP)
+### Administración Web (ERP)
 *   **Framework**: Next.js 14 App Router.
-*   **Auth**: NextAuth with RBAC (Admin/Manager roles).
-*   **Features**: Real-time Socket.io updates, Recharts visualization, Zod form validation.
+*   **Autenticación**: NextAuth con RBAC (Roles Admin/Gerente).
+*   **Funcionalidades**: Actualizaciones en tiempo real con Socket.io, visualización con Recharts, validación de formularios con Zod.
 
-### Mobile App (Operator)
-*   **Offline-First**: Uses SQLite for local storage and synchronizes with the backend when online.
-*   **Sync Engine**: Custom `SyncManager` implementing a "Queue-based" synchronization pattern.
-*   **Architecture**: Modular (Features separated by domain: Production, Inventory, Auth).
+### App Móvil (Operario)
+*   **Offline-First**: Utiliza SQLite para almacenamiento local y sincroniza con el backend cuando hay conexión.
+*   **Motor de Sincronización**: `SyncManager` personalizado implementando un patrón de sincronización basado en colas.
+*   **Arquitectura**: Modular (Funcionalidades separadas por dominio: Producción, Inventario, Auth).
 
-### Desktop App (Workstation)
-*   **Framework**: Electron with React + Vite renderer.
-*   **Persistence**: Local SQLite database via TypeORM.
-*   **IPC**: Secure Main-Renderer communication for native capabilities (File System, Hardware).
+### App de Escritorio (Estación de Trabajo)
+*   **Framework**: Electron con renderizador React + Vite.
+*   **Persistencia**: Base de datos SQLite local vía TypeORM.
+*   **IPC**: Comunicación segura Principal-Renderizador para capacidades nativas (Sistema de Archivos, Hardware).
 
-### Backend (Microservices)
-*   **Framework**: NestJS with strict modular architecture.
-*   **Communication**: REST API for sync calls, Event Emitter for async internal tasks.
-*   **Data Layer**: Prisma ORM with strict type safety.
+### Backend (Microservicios)
+*   **Framework**: NestJS con arquitectura modular estricta.
+*   **Comunicación**: API REST para llamadas de sincronización, Emisor de Eventos para tareas internas asíncronas.
+*   **Capa de Datos**: Prisma ORM con seguridad de tipos estricta.
 
-## 3. Data Flow & Synchronization
+## 3. Flujo de Datos y Sincronización
 
-### Offline Sync Strategy (Mobile)
-1.  **Local Write**: User actions (e.g., updating order status) are written immediately to `SQLite` and a `SyncQueue`.
-2.  **Detection**: `NetInfo` detects network availability.
-3.  **Process Queue**: `SyncManager` iterates through the queue (`Order:Update`, `Inventory:Move`) and sends requests to the API.
-4.  **Conflict Resolution**: "Server Wins" policy for timestamp conflicts, with manual override option for operators.
+### Estrategia de Sincronización Offline (Móvil)
+1.  **Escritura Local**: Las acciones del usuario (ej. actualizar estado de orden) se escriben inmediatamente en `SQLite` y una `SyncQueue`.
+2.  **Detección**: `NetInfo` detecta la disponibilidad de la red.
+3.  **Procesar Cola**: `SyncManager` itera a través de la cola (`Order:Update`, `Inventory:Move`) y envía solicitudes a la API.
+4.  **Resolución de Conflictos**: Política "Servidor Gana" para conflictos de marca de tiempo, con opción de anulación manual para operarios.
 
-## 4. Key Design Patterns
-*   **Repository Pattern**: Abstracting database access logic in the backend.
-*   **Observer Pattern**: Used in the 3D scene controller for state updates.
-*   **Command Pattern**: Encapsulating operations in the mobile sync queue.
+## 4. Patrones de Diseño Clave
+*   **Patrón Repositorio**: Abstracción de la lógica de acceso a datos en el backend.
+*   **Patrón Observador**: Utilizado en el controlador de escena 3D para actualizaciones de estado.
+*   **Patrón Comando**: Encapsulación de operaciones en la cola de sincronización móvil.
 
-## 5. Directory Structure
+## 5. Estructura de Directorios
 
 ```
 xSafe-ERP/
 ├── apps/
-│   ├── backend-api/        # Core Logic
-│   ├── ecommerce-frontend/ # Next.js Store
-│   └── erp-mobile/         # React Native App
-├── packages/               # Shared Libraries
+│   ├── backend-api/        # Lógica Core
+│   ├── ecommerce-frontend/ # Tienda Next.js
+│   ├── erp-web/            # Panel Admin Next.js
+│   ├── erp-desktop/        # App Escritorio Electron
+│   └── erp-mobile/         # App Móvil React Native
+├── packages/               # Librerías Compartidas
 │   ├── ui-kit/
 │   └── types/
-└── documentation/          # Corporate Docs
+└── documentation/          # Documentación Corporativa
 ```

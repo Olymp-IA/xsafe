@@ -1,79 +1,39 @@
-# 📘 XSafe ERP User Manual
+# Manual de Usuario
 
-Welcome to the XSafe ERP platform. This guide will help you navigate the system effectively.
+Bienvenido a la guía de usuario de XSafe ERP.
 
-## 👥 Audience
-This manual is intended for:
-*   **Operators**: Manufacturing floor staff using the Mobile App.
-*   **Managers**: Production supervisors using the Web Dashboard.
-*   **Admins**: System administrators managing users and settings.
+## Para Operarios (App Móvil)
 
----
+### Inicio de Sesión
+1.  Abra la aplicación XSafe en su dispositivo robusto.
+2.  Escanee su insignia de empleado o ingrese sus credenciales.
 
-## 📱 Mobile App (Operators)
+### Gestión de Órdenes
+*   **Ver Tareas**: La pantalla de inicio muestra sus tareas asignadas ordenadas por prioridad.
+*   **Iniciar Trabajo**: Toque una tarea y deslice "Iniciar" para comenzar el seguimiento de tiempo.
+*   **Reportar Problema**: Use el botón "Alerta" para señalar maquinaria rota o escasez de materiales.
 
-### 1. Getting Started
-1.  Open the XSafe app on your tablet or phone.
-2.  Login with your credentials provided by the admin.
-3.  Ensure you have an internet connection for initial sync (optional for daily use).
+### Escáner
+Toque el icono de cámara para escanear códigos QR en:
+*   Piazas de materias primas (para verificar inventario).
+*   Estaciones de trabajo (para registrar entrada/salida).
 
-### 2. Dashboard
-The main screen shows your daily KPIs:
-*   **Pending Orders**: Tasks assigned to you awaiting start.
-*   **In Production**: Orders currently being worked on.
-*   **Quick Actions**: Shortcuts to create orders or scan items.
+## Para Gerentes (Panel Web)
 
-### 3. Scanning Items
-1.  Tap the **"Escanear QR"** button.
-2.  Point the camera at a product label or bin tag.
-3.  The system will automatically identify the item and show details (stock, location).
+### Tablero Principal
+Visión general en tiempo real del estado de producción.
+*   **Gráficos**: Muestran la salida diaria vs objetivos.
+*   **Alertas**: La seccion superior derecha muestra notificaciones críticas.
 
-### 4. Processing Orders
-1.  Go to the **Production** tab.
-2.  Tap an **"IN_PROGRESS"** order card.
-3.  Update the stage (e.g., from "Welding" to "Painting").
-4.  Add notes or photos if necessary.
-5.  Tap **Save**.
+### Gestión de Inventario
+*   Navegue a la pestaña **Inventario**.
+*   Use filtros para encontrar stock bajo.
+*   El botón "Reordenar" genera órdenes de compra automáticas para proveedores aprobados.
 
----
+## Para Clientes (Tienda E-commerce)
 
-## 💻 Web Dashboard (Managers)
-
-### 1. Overview
-The web dashboard provides a bird's-eye view of the factory floor.
-*   **Real-time status**: See active machines and operator status.
-*   **Alerts**: Low stock warnings and delayed orders.
-
-### 2. Managing Inventory
-1.  Navigate to **Inventory > Stock List**.
-2.  Use filters to find specific SKU categories.
-3.  Click **"Adjust Stock"** to perform manual corrections.
-
-### 3. Reports
-1.  Go to **Analytics**.
-2.  Select a date range.
-3.  Click **"Export PDF"** to generate a production report.
-
----
-
-## 🛒 E-commerce Store (Customers)
-
-### 1. Browsing Products
-*   Use the 3D viewer to rotate and inspect motorcycle cages.
-*   Click **"Customize"** to change colors and finishes.
-
-### 2. Placing an Order
-1.  Add items to your cart.
-2.  Proceed to checkout.
-3.  Enter shipping details and choose a payment method.
-4.  You will receive an email confirmation with tracking info.
-
----
-
-## ❓ FAQ
-
-**Q: What if the mobile app goes offline?**
-A: The app works fully offline. Continue working ensuring you sync ("Sincronizar ahora") once you regain connection.
-
-**Q: How do I reset my password?**
-A: Contact your system administrator or use the "Forgot Password" link on the login screen.
+### Personalización de Producto
+1.  Seleccione un modelo de motocicleta.
+2.  Use el visualizador 3D para rotar y hacer zoom en la defensa.
+3.  Seleccione colores y acabados.
+4.  Añada al carrito y proceda al pago seguro.

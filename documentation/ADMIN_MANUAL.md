@@ -1,53 +1,15 @@
-# 👮 Admin Manual
+# Manual de Administración
 
-This guide is for System Administrators responsible for managing the XSafe ERP platform configuration, users, and security.
+Guía para administradores del sistema y personal de TI.
 
-## 👤 User Management
+## Gestión de Usuarios
+1.  Acceda al Panel Admin.
+2.  Vaya a **Configuración > Usuarios**.
+3.  Puede invitar nuevos usuarios por correo electrónico o desactivar cuentas existentes.
 
-### Creating Users
-1.  Log in to the **Admin Console** at `https://admin.xsafe-erp.com`.
-2.  Navigate to **Users > Add New**.
-3.  Enter details:
-    *   **Email**: Corporate email required.
-    *   **Role**:
-        *   `OPERATOR`: Production floor access (Mobile App).
-        *   `MANAGER`: Dashboard and Reports access.
-        *   `ADMIN`: Full system access.
-4.  User will receive an invite email to set their password.
+## Configuración del Sistema
+*   **Parámetros de Producción**: Ajuste los tiempos estimados por etapa en **Configuración > Producción**.
+*   **Integraciones**: Gestione claves API para proveedores de pago y logística.
 
-### Revoking Access
-1.  Find the user in the **Users** list.
-2.  Click **"Deactivate"**.
-3.  *Note*: This immediately revokes API access and logs out all active sessions.
-
-## ⚙️ System Configuration
-
-### Feature Flags
-We use feature flags to safely roll out new capabilities.
-*   `ENABLE_3D_CUSTOMIZER`: Toggle the 3D viewer on the store.
-*   `MAINTENANCE_MODE`: Enable to block all non-admin traffic.
-
-### Inventory Rules
-Configure strictness of inventory checks:
-*   **Strict Mode**: Prevents production if stock is insufficient.
-*   **Soft Mode**: Allows negative stock with a warning (useful for high-speed manufacturing).
-
-## 🛡️ Audit Logs
-All sensitive actions are logged.
-To view logs:
-1.  Go to **Settings > Audit Logs**.
-2.  Filter by `User`, `Action`, or `Date`.
-3.  Export logs to CSV for compliance reviews.
-
-## ⚠️ Troubleshooting
-
-**"Sync Conflict" Errors**
-If the mobile app reports sync issues:
-1.  Check the **Sync Queue** properties in the Admin Console.
-2.  Identify the conflicting Record ID.
-3.  Choose **"Force Server Version"** or **"Accept Client Version"**.
-
-**Database Locks**
-If the system feels slow:
-1.  Check **DB Monitor**.
-2.  Kill any long-running transactions > 60s.
+## Monitoreo
+Use el tablero de **Estado del Sistema** para ver servidores activos y carga de la base de datos.

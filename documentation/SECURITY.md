@@ -1,39 +1,24 @@
-# 🔒 Security Policy
+# Política de Seguridad
 
-XSafe ERP places the highest priority on data security and user privacy. This document details our security model and compliance standards.
+Este documento describe los protocolos y configuraciones de seguridad para la plataforma XSafe ERP.
 
-## 🛡️ Security Model
+## Autenticación y Autorización
+*   **JWT (JSON Web Tokens)**: Usado para gestión de sesiones sin estado.
+*   **NextAuth.js**: Gestiona la autenticación en las aplicaciones Web.
+*   **RBAC (Control de Acceso Basado en Roles)**:
+    *   `ADMIN`: Acceso completo al sistema.
+    *   `MANAGER`: Acceso de lectura/escritura a recursos de negocio, sin configuración del sistema.
+    *   `OPERATOR`: Acceso limitado a tareas de producción.
+    *   `GUEST`: Solo lectura pública (Tienda).
 
-### Authentication & Authorization
-*   **Identity API**: Centralized auth service using OAuth2 and OpenID Connect.
-*   **JWT**: Stateless session management with short-lived access tokens (15m) and secure refresh tokens (7d).
-*   **RBAC**: Role-Based Access Control enforcing granular permissions (e.g., `READ_INVENTORY`, `WRITE_PRODUCTION`).
+## Seguridad de Datos
+*   **Encriptación en Tránsito**: Todo el tráfico HTTP es forzado a través de TLS 1.3.
+*   **Encriptación en Reposo**: Las bases de datos de producción (RDS) están encriptadas con claves KMS gestionadas.
+*   **Datos Sensibles**: Las contraseñas se hashmean usando `bcrypt`. La información de pago es tokenizada por Stripe; no se almacenan PANs.
 
-### Data Protection
-*   **Encryption at Rest**: AES-256 encryption for database volumes and S3 buckets.
-*   **Encryption in Transit**: TLS 1.3 enforced for all API traffic.
-*   **Sensitive Data**: PII (Personally Identifiable Information) and passwords are hashed using Argon2id.
+## Cumplimiento
+*   **GDPR**: Derecho al olvido y endpoints de exportación de datos implementados.
+*   **ISO 27001**: Controles de acceso y auditoría de logs activados.
 
-## ✅ Compliance
-
-### OWASP Top 10
-We actively mitigate standard web vulnerabilities:
-*   **Injection**: Strictly using ORMs (Prisma) to prevent SQLi.
-*   **XSS**: React automatically escapes content; Content Security Policy (CSP) headers enabled.
-*   **CSRF**: SameSite cookie policies enforced.
-
-### GDPR (General Data Protection Regulation)
-*   **Right to Erase**: Automated endpoints to anonymize user data upon request.
-*   **Data Portability**: Users can export their data in JSON format.
-*   **Consent**: Strict opt-in for marketing communications.
-
-## 🚨 Incident Response
-In the event of a security breach:
-1.  **Identify**: Security Team confirms the breach.
-2.  **Contain**: Isolate affected systems (potentially pausing traffic).
-3.  **Eradicate**: Patch vulnerability and remove malicious artifacts.
-4.  **Recover**: Restore from clean backups.
-5.  **Notify**: Inform affected users within 72 hours (as per GDPR).
-
-## 🐛 Vulnerability Reporting
-Please report potential security issues to `security@xsafe.com`. We offer a bug bounty program for critical disclosures.
+## Reporte de Vulnerabilidades
+Por favor, no divulgue vulnerabilidades públicamente. Envíe un correo a `security@xsafe-erp.com`. Intentamos responder en un plazo de 24 horas.
