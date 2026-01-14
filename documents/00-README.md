@@ -14,11 +14,11 @@
 |----|-----------|-------------|--------|
 | 01 | [Arquitectura del Sistema](./01-arquitectura-sistema.md) | Arquitectura completa con ADRs | ✅ |
 | 02 | [Casos de Uso](./02-casos-de-uso.md) | Especificación detallada de casos de uso | ✅ |
-| 03 | [Manual de Usuario](./03-manual-usuario-completo.md) | Guía operativa completa (100+ páginas) | 🔄 |
+| 03 | [Manual de Usuario](./03-manual-usuario-completo.md) | Guía operativa completa (~120 páginas) | ✅ |
 | 04 | [Documentación Técnica](./04-documentacion-tecnica.md) | Para desarrolladores | ✅ |
 | 05 | [Runbooks Operacionales](./05-runbooks-operacionales.md) | Procedimientos críticos | ✅ |
-| 06 | [Matriz de Trazabilidad](./06-matriz-trazabilidad.md) | Trazabilidad código-documentación | 🔄 |
-| 07 | [Plan de Pruebas](./07-plan-pruebas.md) | Estrategia de testing | 🔄 |
+| 06 | [Matriz de Trazabilidad](./06-matriz-trazabilidad.md) | Trazabilidad código-documentación | ✅ |
+| 07 | [Plan de Pruebas](./07-plan-pruebas.md) | Estrategia de testing | ✅ |
 | 08 | [Documento de Seguridad](./08-documento-seguridad.md) | Controles y políticas | ✅ |
 | 09 | [Glosario de Términos](./09-glosario-terminos.md) | Diccionario controlado | ✅ |
 
@@ -28,16 +28,16 @@ Ubicación: [`/uml/`](./uml/)
 
 | Diagrama | Archivo | Estado |
 |----------|---------|--------|
-| Contexto del Sistema | `01-diagrama-contexto.md` | 🔄 |
-| Casos de Uso | `02-diagrama-casos-uso.md` | 🔄 |
-| Clases | `03-diagrama-clases.md` | 🔄 |
-| Secuencia | `04-diagrama-secuencia.md` | 🔄 |
-| Componentes | `05-diagrama-componentes.md` | 🔄 |
-| Despliegue | `06-diagrama-despliegue.md` | 🔄 |
-| Actividades | `07-diagrama-actividades.md` | 🔄 |
-| Estados | `08-diagrama-estados.md` | 🔄 |
-| Entidad-Relación | `09-diagrama-er.md` | 🔄 |
-| Paquetes | `10-diagrama-paquetes.md` | 🔄 |
+| Contexto del Sistema | [01-diagrama-contexto.md](./uml/01-diagrama-contexto.md) | ✅ |
+| Casos de Uso | [02-diagrama-casos-uso.md](./uml/02-diagrama-casos-uso.md) | ✅ |
+| Clases | [03-diagrama-clases.md](./uml/03-diagrama-clases.md) | ✅ |
+| Secuencia | [04-diagrama-secuencia.md](./uml/04-diagrama-secuencia.md) | ✅ |
+| Componentes | [05-diagrama-componentes.md](./uml/05-diagrama-componentes.md) | ✅ |
+| Despliegue | [06-diagrama-despliegue.md](./uml/06-diagrama-despliegue.md) | ✅ |
+| Actividades | [07-diagrama-actividades.md](./uml/07-diagrama-actividades.md) | ✅ |
+| Estados | [08-diagrama-estados.md](./uml/08-diagrama-estados.md) | ✅ |
+| Entidad-Relación | [09-diagrama-er.md](./uml/09-diagrama-er.md) | ✅ |
+| Paquetes | [10-diagrama-paquetes.md](./uml/10-diagrama-paquetes.md) | ✅ |
 
 ## Estructura del Proyecto Analizado
 
